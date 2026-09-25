@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة السادسة — Box Model والمسافات | Sunshine T Academy</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Fira+Code:wght@400;500&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --primary: #667eea;
+        --primary-dark: #4c5fd5;
+        --secondary: #764ba2;
+        --accent: #f39c12;
+        --success: #27ae60;
+        --danger: #e74c3c;
+        --info: #3498db;
+        --dark: #2c3e50;
+        --light: #f8f9fa;
+        --code-bg: #1e1e2e;
+        --code-header: #181825;
+    }
+
+    body {
+        font-family: 'Cairo', sans-serif;
+        line-height: 1.85;
+        color: var(--dark);
+        background: #eef1f7;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 210mm;
+        margin: 0 auto;
+        background: #fff;
+        padding: 40px;
+        box-shadow: 0 10px 40px rgba(102, 126, 234, 0.15);
+        border-radius: 12px;
+    }
+
+    /* ═══ Header ═══ */
+    .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 35px 30px;
+        border-radius: 12px;
+        margin: -40px -40px 35px -40px;
+        text-align: center;
+    }
+    .header h1 { font-size: 2.1em; font-weight: 900; margin-bottom: 8px; }
+    .header .subtitle { font-size: 1.15em; opacity: .95; font-weight: 600; }
+    .lecture-info {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+        padding: 14px;
+        background: rgba(255,255,255,.15);
+        border-radius: 10px;
+        font-size: .95em;
+    }
+    .lecture-info div { text-align: center; }
+    .lecture-info strong { display: block; font-size: .85em; opacity: .85; margin-bottom: 3px; }
+
+    /* ═══ Sections ═══ */
+    .section { margin: 32px 0; page-break-inside: avoid; }
+    .section-title {
+        font-size: 1.55em;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 16px;
+        padding-right: 14px;
+        border-right: 5px solid var(--secondary);
+        display: block;
+    }
+
+    /* ═══ Review Box ═══ */
+    .review-box {
+        background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+        padding: 22px;
+        border-radius: 12px;
+        border-right: 5px solid var(--info);
+        margin: 20px 0;
+    }
+    .review-box h3 { color: #006064; margin-bottom: 14px; font-size: 1.25em; }
+    .review-box ul { list-style: none; }
+    .review-box li {
+        padding: 6px 26px 6px 0;
+        position: relative;
+        font-size: .95em;
+    }
+    .review-box li::before {
+        content: "↻";
+        position: absolute;
+        right: 0;
+        color: var(--info);
+        font-weight: 900;
+        font-size: 1.2em;
+    }
+
+    /* ═══ Objectives ═══ */
+    .objectives {
+        background: linear-gradient(135deg, #fff8e1 0%, #ffeaa7 100%);
+        padding: 22px;
+        border-radius: 12px;
+        border-right: 5px solid var(--accent);
+    }
+    .objectives h3 { color: #d35400; margin-bottom: 14px; font-size: 1.25em; }
+    .objectives ul { list-style: none; }
+    .objectives li { padding: 6px 26px 6px 0; position: relative; }
+    .objectives li::before {
+        content: "✓";
+        position: absolute;
+        right: 0;
+        color: var(--success);
+        font-weight: 900;
+        font-size: 1.1em;
+    }
+
+    /* ═══ Content Box ═══ */
+    .content-box {
+        background: var(--light);
+        padding: 22px;
+        border-radius: 10px;
+        margin: 15px 0;
+        border-right: 4px solid var(--primary);
+    }
+    .content-box h4 { color: var(--primary-dark); margin: 15px 0 10px; }
+    .content-box ul { padding-right: 22px; }
+    .content-box li { padding: 4px 0; }
+
+    /* ═══ Key Term ═══ */
+    .key-term {
+        background: #fff3cd;
+        padding: 2px 9px;
+        border-radius: 5px;
+        font-weight: 700;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+    }
+
+    /* ═══ Notes ═══ */
+    .note {
+        background: #fff5f5;
+        padding: 15px 20px;
+        border-radius: 10px;
+        border-right: 5px solid var(--danger);
+        margin: 16px 0;
+    }
+    .note strong { color: #c0392b; }
+
+    .tip {
+        background: #f0fdf4;
+        padding: 15px 20px;
+        border-radius: 10px;
+        border-right: 5px solid var(--success);
+        margin: 16px 0;
+    }
+    .tip strong { color: #166534; }
+
+    .warn {
+        background: #fffbeb;
+        padding: 15px 20px;
+        border-radius: 10px;
+        border-right: 5px solid var(--accent);
+        margin: 16px 0;
+    }
+    .warn strong { color: #b45309; }
+
+    .info-box {
+        background: #eff6ff;
+        padding: 15px 20px;
+        border-radius: 10px;
+        border-right: 5px solid var(--info);
+        margin: 16px 0;
+    }
+    .info-box strong { color: #1e40af; }
+
+    /* ═══════════════════════════════════════════
+       🎨 CODE EDITOR STYLE
+       ═══════════════════════════════════════════ */
+    .code-editor {
+        background: var(--code-bg);
+        border-radius: 12px;
+        margin: 20px 0;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0,0,0,.18);
+        direction: ltr;
+        text-align: left;
+    }
+
+    .editor-bar {
+        background: var(--code-header);
+        padding: 11px 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 1px solid #313244;
+    }
+    .editor-dots { display: flex; gap: 7px; }
+    .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .dot.red { background: #ff5f57; }
+    .dot.yellow { background: #febc2e; }
+    .dot.green { background: #28c840; }
+    .editor-filename {
+        margin-left: auto;
+        margin-right: auto;
+        color: #a6adc8;
+        font-family: 'Fira Code', monospace;
+        font-size: .85em;
+        font-weight: 500;
+        letter-spacing: .3px;
+    }
+
+    .code-editor pre {
+        margin: 0;
+        padding: 20px 22px;
+        overflow-x: auto;
+        font-family: 'Fira Code', 'Courier New', monospace;
+        font-size: 14.5px;
+        line-height: 1.75;
+        color: #cdd6f4;
+        white-space: pre;
+        tab-size: 4;
+        direction: ltr;
+        text-align: left;
+        -moz-tab-size: 4;
+    }
+    .code-editor pre::-webkit-scrollbar { height: 8px; }
+    .code-editor pre::-webkit-scrollbar-thumb { background: #45475a; border-radius: 4px; }
+
+    /* ═══ Syntax Highlighting ═══ */
+    .tag       { color: #f38ba8; }
+    .attr      { color: #fab387; }
+    .value     { color: #a6e3a1; }
+    .text      { color: #cdd6f4; }
+    .comment   { color: #6c7086; font-style: italic; }
+    .doctype   { color: #cba6f7; font-weight: 600; }
+    .selector  { color: #89dceb; }
+    .property  { color: #f9e2af; }
+    .css-value { color: #a6e3a1; }
+
+    /* ═══ Output Preview ═══ */
+    .output {
+        background: #fff;
+        border: 2px dashed var(--primary);
+        border-radius: 10px;
+        padding: 18px;
+        margin: 18px 0;
+    }
+    .output::before {
+        content: "🌐 النتيجة في المتصفح";
+        display: block;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 12px;
+        font-size: .95em;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 8px;
+    }
+
+    /* ═══ Box Model Diagram ═══ */
+    .box-model-diagram {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin: 25px 0;
+        border: 2px solid #e5e7eb;
+    }
+    .box-model-visual {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    .margin-box {
+        background: #fee2e2;
+        padding: 25px;
+        border: 3px dashed #dc2626;
+        border-radius: 8px;
+        text-align: center;
+    }
+    .border-box {
+        background: #fef3c7;
+        padding: 25px;
+        border: 5px solid #f59e0b;
+        border-radius: 8px;
+    }
+    .padding-box {
+        background: #dcfce7;
+        padding: 25px;
+        border: 3px dashed #16a34a;
+        border-radius: 8px;
+    }
+    .content-box-visual {
+        background: #dbeafe;
+        padding: 20px;
+        border: 3px solid #2563eb;
+        border-radius: 8px;
+        font-weight: 700;
+        color: #1e40af;
+    }
+    .box-label {
+        font-size: 0.75em;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+
+    /* ═══ Interactive Box Demo ═══ */
+    .interactive-demo {
+        background: #f8f9fa;
+        padding: 25px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border: 2px solid #dee2e6;
+    }
+    .demo-box {
+        background: #667eea;
+        color: white;
+        padding: 20px;
+        margin: 20px;
+        border: 5px solid #764ba2;
+        text-align: center;
+        font-weight: 600;
+        border-radius: 8px;
+    }
+
+    /* ═══ Comparison ═══ */
+    .comparison {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin: 20px 0;
+    }
+    .comp-item {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        border: 2px solid #e5e7eb;
+    }
+    .comp-item h4 {
+        color: var(--primary-dark);
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: .95em;
+        padding: 8px;
+        background: var(--light);
+        border-radius: 6px;
+    }
+    @media (max-width: 700px) {
+        .comparison { grid-template-columns: 1fr; }
+    }
+
+    /* ═══ Example Box ═══ */
+    .example {
+        background: #f0fdf4;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 16px 0;
+        border-right: 5px solid var(--success);
+    }
+    .example h4 { color: var(--success); margin-bottom: 10px; }
+
+    /* ═══ Tables ═══ */
+    table.doc-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        font-size: .95em;
+    }
+    table.doc-table th {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        padding: 12px 14px;
+        text-align: right;
+        font-weight: 700;
+    }
+    table.doc-table td {
+        padding: 11px 14px;
+        border-bottom: 1px solid #e9ecf3;
+    }
+    table.doc-table tr:nth-child(even) { background: #f8f9fb; }
+    table.doc-table tr:last-child td { border-bottom: none; }
+    table.doc-table code {
+        background: #eef1f7;
+        padding: 3px 8px;
+        border-radius: 5px;
+        color: var(--primary-dark);
+        font-family: 'Fira Code', monospace;
+        font-size: .9em;
+        direction: ltr;
+        display: inline-block;
+    }
+
+    /* ═══ Product Card (for project) ═══ */
+    .product-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        max-width: 300px;
+        margin: 15px auto;
+    }
+    .product-image {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 3em;
+    }
+    .product-info {
+        padding: 20px;
+    }
+    .product-title {
+        font-size: 1.3em;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 8px;
+    }
+    .product-price {
+        font-size: 1.5em;
+        color: #27ae60;
+        font-weight: 700;
+        margin: 10px 0;
+    }
+    .product-desc {
+        color: #7f8c8d;
+        font-size: 0.9em;
+        margin: 10px 0;
+    }
+    .product-btn {
+        background: #667eea;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-family: 'Cairo', sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* ═══ Quiz ═══ */
+    .quiz {
+        background: linear-gradient(135deg, #f3e7ff 0%, #e0d1f5 100%);
+        padding: 28px 24px;
+        border-radius: 14px;
+        margin: 35px 0;
+        page-break-before: always;
+    }
+    .quiz > h3 {
+        color: #6b21a8;
+        margin-bottom: 22px;
+        font-size: 1.4em;
+        text-align: center;
+        padding-bottom: 12px;
+        border-bottom: 2px dashed #a78bfa;
+    }
+    .question {
+        background: white;
+        padding: 16px 18px;
+        border-radius: 10px;
+        margin: 13px 0;
+        border-right: 4px solid #8b5cf6;
+        box-shadow: 0 2px 10px rgba(139, 92, 246, .08);
+    }
+    .question h4 { color: #6b21a8; margin-bottom: 10px; font-size: 1em; }
+    .options { list-style: none; }
+    .options li {
+        padding: 8px 14px;
+        margin: 5px 0;
+        background: #f8f9fb;
+        border-radius: 7px;
+        font-size: .93em;
+        direction: ltr;
+        text-align: left;
+        font-family: 'Fira Code', monospace;
+        color: #374151;
+    }
+    .options li.ar {
+        direction: rtl;
+        text-align: right;
+        font-family: 'Cairo', sans-serif;
+    }
+
+    /* ═══ Homework ═══ */
+    .homework {
+        background: linear-gradient(135deg, #fff1f0 0%, #ffe0db 100%);
+        padding: 28px 24px;
+        border-radius: 14px;
+        margin: 35px 0;
+        page-break-before: always;
+    }
+    .homework > h3 {
+        color: #b91c1c;
+        margin-bottom: 22px;
+        font-size: 1.4em;
+        text-align: center;
+        padding-bottom: 12px;
+        border-bottom: 2px dashed #f87171;
+    }
+    .task {
+        background: white;
+        padding: 18px;
+        border-radius: 10px;
+        margin: 14px 0;
+        border-right: 4px solid var(--danger);
+        box-shadow: 0 2px 10px rgba(231, 76, 60, .08);
+    }
+    .task h4 {
+        color: #b91c1c;
+        margin-bottom: 10px;
+        font-size: 1.05em;
+    }
+    .task ul { padding-right: 22px; margin-top: 6px; }
+    .task ul li { padding: 3px 0; font-size: .95em; }
+
+    /* ═══ Summary ═══ */
+    .summary {
+        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        padding: 22px;
+        border-radius: 12px;
+        border-right: 5px solid var(--success);
+        margin: 20px 0;
+    }
+    .summary h3 { color: var(--success); margin-bottom: 14px; }
+    .summary ul { list-style: none; }
+    .summary li {
+        padding: 6px 26px 6px 0;
+        position: relative;
+        font-weight: 500;
+    }
+    .summary li::before {
+        content: "✓";
+        position: absolute;
+        right: 0;
+        color: var(--success);
+        font-weight: 900;
+    }
+
+    /* ═══ Footer ═══ */
+    .footer {
+        text-align: center;
+        margin-top: 40px;
+        padding-top: 22px;
+        border-top: 2px solid var(--primary);
+        color: #7f8c8d;
+        font-size: .95em;
+    }
+    .footer strong { color: var(--primary-dark); font-size: 1.05em; }
+    .next-lecture {
+        margin-top: 14px;
+        padding: 12px;
+        background: linear-gradient(135deg, #eef1f7 0%, #e0e7ff 100%);
+        border-radius: 8px;
+        color: var(--primary-dark);
+        font-weight: 600;
+    }
+
+    /* ═══ Print ═══ */
+    @media print {
+        body { background: white; padding: 0; }
+        .container { box-shadow: none; padding: 20px; }
+        .section { page-break-inside: avoid; }
+        .quiz, .homework { page-break-before: always; }
+        .code-editor { box-shadow: none; }
+        .header { margin: -20px -20px 25px -20px; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ═══════ HEADER ═══════ -->
+    <header class="header">
+        <h1>🌟 Sunshine T Academy</h1>
+        <div class="subtitle">Frontend Development Course</div>
+        <div class="lecture-info">
+            <div><strong>المحاضرة</strong><span>السادسة</span></div>
+            <div><strong>الموضوع</strong><span>Box Model والمسافات</span></div>
+            <div><strong>المستوى</strong><span>مبتدئ → متوسط</span></div>
+        </div>
+    </header>
+
+    <!-- ═══════ REVIEW ═══════ -->
+    <section class="section">
+        <div class="review-box">
+            <h3>↻ مراجعة سريعة — المحاضرة الخامسة</h3>
+            <ul>
+                <li>CSS = التصميم، HTML = المحتوى</li>
+                <li>3 طرق لكتابة CSS: Inline, Internal, External (الأفضل!)</li>
+                <li>Selectors: Element, Class (.), ID (#)</li>
+                <li>الألوان: Names, Hex (#), RGB, RGBA</li>
+                <li>تنسيق النصوص: font-size, color, font-weight, text-align</li>
+                <li>بنينا بطاقة تعريف ملونة! 🎨</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ═══════ OBJECTIVES ═══════ -->
+    <section class="section">
+        <div class="objectives">
+            <h3>🎯 أهداف المحاضرة</h3>
+            <ul>
+                <li>فهم Box Model — أهم مفهوم في CSS!</li>
+                <li>معرفة الأجزاء الأربعة: Content, Padding, Border, Margin</li>
+                <li>الفرق بين Padding و Margin</li>
+                <li>استخدام Width و Height بشكل صحيح</li>
+                <li>فهم box-sizing: border-box</li>
+                <li>التحكم في الحواف (Borders)</li>
+                <li>بناء مشروع: بطاقات منتجات احترافية!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ═══════ WHAT IS BOX MODEL ═══════ -->
+    <section class="section">
+        <h2 class="section-title">ما هو Box Model؟ 📦</h2>
+
+        <div class="content-box">
+            <p>في CSS، <strong>كل عنصر</strong> في الصفحة يُعامل كـ <span class="key-term">صندوق (Box)</span>!</p>
+            <p>هذا الصندوق يتكون من <strong>4 أجزاء</strong> من الداخل للخارج:</p>
+        </div>
+
+        <div class="box-model-diagram">
+            <h3 style="text-align: center; color: var(--primary-dark); margin-bottom: 20px;">📊 الرسم التوضيحي لـ Box Model</h3>
+            <div class="box-model-visual">
+                <div class="margin-box">
+                    <div class="box-label" style="color: #dc2626;">MARGIN (الهامش الخارجي)</div>
+                    <div class="border-box">
+                        <div class="box-label" style="color: #f59e0b;">BORDER (الحد/الإطار)</div>
+                        <div class="padding-box">
+                            <div class="box-label" style="color: #16a34a;">PADDING (الحشوة الداخلية)</div>
+                            <div class="content-box-visual">
+                                CONTENT<br>(المحتوى)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 تشبيه بسيط:</strong><br>
+            تخيل <strong>موبايل في علبته</strong>:<br>
+            📱 <strong>Content</strong> = الموبايل نفسه<br>
+            🛡️ <strong>Padding</strong> = الإسفنجة حول الموبايل<br>
+            📦 <strong>Border</strong> = العلبة الكرتون<br>
+            🌫️ <strong>Margin</strong> = المسافة بين علبتك وعلبة أخرى على الرف
+        </div>
+
+        <h3 style="color: var(--primary-dark); margin: 25px 0 15px;">🔍 شرح كل جزء بالتفصيل:</h3>
+
+        <table class="doc-table">
+            <thead>
+                <tr><th>الجزء</th><th>الوصف</th><th>الخاصية</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong style="color: #2563eb;">Content</strong></td>
+                    <td>المحتوى الفعلي (نص، صورة...)</td>
+                    <td><code>width</code>, <code>height</code></td>
+                </tr>
+                <tr>
+                    <td><strong style="color: #16a34a;">Padding</strong></td>
+                    <td>المسافة <strong>داخل</strong> العنصر (بين المحتوى والحد)</td>
+                    <td><code>padding</code></td>
+                </tr>
+                <tr>
+                    <td><strong style="color: #f59e0b;">Border</strong></td>
+                    <td>الحد/الإطار حول العنصر</td>
+                    <td><code>border</code></td>
+                </tr>
+                <tr>
+                    <td><strong style="color: #dc2626;">Margin</strong></td>
+                    <td>المسافة <strong>خارج</strong> العنصر (بينه وبين العناصر الأخرى)</td>
+                    <td><code>margin</code></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ═══════ CONTENT ═══════ -->
+    <section class="section">
+        <h2 class="section-title">1️⃣ Content — المحتوى (Width & Height)</h2>
+
+        <div class="content-box">
+            <p>نتحكم في حجم المحتوى بـ <code>width</code> (العرض) و <code>height</code> (الارتفاع).</p>
+        </div>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">width-height.css</div>
+            </div>
+<pre><span class="selector">.box</span> {
+    <span class="property">width</span>: <span class="css-value">200px</span>;
+    <span class="property">height</span>: <span class="css-value">100px</span>;
+    <span class="property">background-color</span>: <span class="css-value">#3498db</span>;
+}</pre>
+        </div>
+
+        <div class="output">
+            <div style="width: 200px; height: 100px; background-color: #3498db; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600;">
+                200px × 100px
+            </div>
+        </div>
+
+        <div class="tip">
+            <strong>💡 الوحدات الشائعة:</strong>
+            <ul style="padding-right: 20px; margin-top: 8px;">
+                <li><code>px</code> = بكسل (الأشهر)</li>
+                <li><code>%</code> = نسبة مئوية من العنصر الأب</li>
+                <li><code>auto</code> = تلقائي (حسب المحتوى)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ═══════ PADDING ═══════ -->
+    <section class="section">
+        <h2 class="section-title">2️⃣ Padding — الحشوة الداخلية</h2>
+
+        <div class="content-box">
+            <p><span class="key-term">Padding</span> = المسافة <strong>داخل</strong> العنصر بين المحتوى والحد.</p>
+            <p>يُستخدم لإعطاء "مساحة تنفس" للمحتوى.</p>
+        </div>
+
+        <h3 style="color: var(--primary-dark); margin: 25px 0 15px;">🎯 طرق كتابة Padding:</h3>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">padding.css</div>
+            </div>
+<pre><span class="comment">/* طريقة 1: padding واحد لكل الجوانب */</span>
+<span class="selector">.box1</span> {
+    <span class="property">padding</span>: <span class="css-value">20px</span>;
+}
+
+<span class="comment">/* طريقة 2: أعلى/أسفل | يمين/يسار */</span>
+<span class="selector">.box2</span> {
+    <span class="property">padding</span>: <span class="css-value">20px 40px</span>;
+}
+
+<span class="comment">/* طريقة 3: أعلى | يمين/يسار | أسفل */</span>
+<span class="selector">.box3</span> {
+    <span class="property">padding</span>: <span class="css-value">10px 20px 30px</span>;
+}
+
+<span class="comment">/* طريقة 4: أعلى | يمين | أسفل | يسار (اتجاه الساعة ⏰) */</span>
+<span class="selector">.box4</span> {
+    <span class="property">padding</span>: <span class="css-value">10px 20px 30px 40px</span>;
+}
+
+<span class="comment">/* طريقة 5: كل جانب منفصل */</span>
+<span class="selector">.box5</span> {
+    <span class="property">padding-top</span>: <span class="css-value">10px</span>;
+    <span class="property">padding-right</span>: <span class="css-value">20px</span>;
+    <span class="property">padding-bottom</span>: <span class="css-value">30px</span>;
+    <span class="property">padding-left</span>: <span class="css-value">40px</span>;
+}</pre>
+        </div>
+
+        <div class="comparison">
+            <div class="comp-item">
+                <h4>❌ بدون Padding</h4>
+                <div style="background: #667eea; color: white; width: 150px; font-weight: 600;">نص ملتصق بالحواف</div>
+            </div>
+            <div class="comp-item">
+                <h4>✅ مع Padding: 20px</h4>
+                <div style="background: #667eea; color: white; width: 150px; padding: 20px; font-weight: 600;">نص مريح ومتباعد</div>
+            </div>
+        </div>
+
+        <div class="tip">
+            <strong>💡 القاعدة البسيطة:</strong><br>
+            <code>padding: 20px</code> → كل الجوانب 20px<br>
+            <code>padding: 20px 40px</code> → أعلى/أسفل 20px، يمين/يسار 40px
+        </div>
+    </section>
+
+    <!-- ═══════ BORDER ═══════ -->
+    <section class="section">
+        <h2 class="section-title">3️⃣ Border — الحد/الإطار</h2>
+
+        <div class="content-box">
+            <p><span class="key-term">Border</span> = الخط/الإطار حول العنصر.</p>
+            <p>نحتاج 3 أشياء: <strong>السُمك، النوع، اللون</strong></p>
+        </div>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">border.css</div>
+            </div>
+<pre><span class="comment">/* الطريقة المختصرة (الأشهر) */</span>
+<span class="selector">.box</span> {
+    <span class="property">border</span>: <span class="css-value">3px solid #e74c3c</span>;
+    <span class="comment">/*      ↑     ↑      ↑
+            سُمك  نوع   لون  */</span>
+}
+
+<span class="comment">/* أو كل خاصية منفصلة */</span>
+<span class="selector">.box2</span> {
+    <span class="property">border-width</span>: <span class="css-value">3px</span>;
+    <span class="property">border-style</span>: <span class="css-value">solid</span>;
+    <span class="property">border-color</span>: <span class="css-value">#e74c3c</span>;
+}</pre>
+        </div>
+
+        <h3 style="color: var(--primary-dark); margin: 25px 0 15px;">🎨 أنواع الحدود (Border Styles):</h3>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0;">
+            <div style="border: 3px solid #2c3e50; padding: 15px; text-align: center; border-radius: 6px;">
+                <strong>solid</strong><br>خط صلب
+            </div>
+            <div style="border: 3px dashed #2c3e50; padding: 15px; text-align: center; border-radius: 6px;">
+                <strong>dashed</strong><br>خط متقطع
+            </div>
+            <div style="border: 3px dotted #2c3e50; padding: 15px; text-align: center; border-radius: 6px;">
+                <strong>dotted</strong><br>نقاط
+            </div>
+            <div style="border: 5px double #2c3e50; padding: 15px; text-align: center; border-radius: 6px;">
+                <strong>double</strong><br>خط مزدوج
+            </div>
+        </div>
+
+        <h3 style="color: var(--primary-dark); margin: 25px 0 15px;">🔲 Border Radius — الزوايا المدورة</h3>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">border-radius.css</div>
+            </div>
+<pre><span class="selector">.rounded</span> {
+    <span class="property">border</span>: <span class="css-value">3px solid #3498db</span>;
+    <span class="property">border-radius</span>: <span class="css-value">10px</span>; <span class="comment">/* زوايا مدورة */</span>
+}
+
+<span class="selector">.circle</span> {
+    <span class="property">border-radius</span>: <span class="css-value">50%</span>; <span class="comment">/* دائرة كاملة */</span>
+}</pre>
+        </div>
+
+        <div class="output">
+            <div style="display: flex; gap: 15px; justify-content: center; align-items: center;">
+                <div style="border: 3px solid #3498db; padding: 15px; background: #ecf0f1;">زوايا حادة</div>
+                <div style="border: 3px solid #3498db; padding: 15px; background: #ecf0f1; border-radius: 10px;">زوايا مدورة</div>
+                <div style="border: 3px solid #3498db; width: 80px; height: 80px; background: #ecf0f1; border-radius: 50%; display: flex; align-items: center; justify-content: center;">دائرة</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════ MARGIN ═══════ -->
+    <section class="section">
+        <h2 class="section-title">4️⃣ Margin — الهامش الخارجي</h2>
+
+        <div class="content-box">
+            <p><span class="key-term">Margin</span> = المسافة <strong>خارج</strong> العنصر (المسافة بينه وبين العناصر الأخرى).</p>
+            <p>نفس طريقة كتابة <code>padding</code> بالظبط!</p>
+        </div>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">margin.css</div>
+            </div>
+<pre><span class="comment">/* margin واحد لكل الجوانب */</span>
+<span class="selector">.box</span> {
+    <span class="property">margin</span>: <span class="css-value">20px</span>;
+}
+
+<span class="comment">/* أعلى/أسفل | يمين/يسار */</span>
+<span class="selector">.box2</span> {
+    <span class="property">margin</span>: <span class="css-value">30px 50px</span>;
+}
+
+<span class="comment">/* توسيط العنصر أفقياً (مهم جداً!) */</span>
+<span class="selector">.centered</span> {
+    <span class="property">margin</span>: <span class="css-value">0 auto</span>;
+    <span class="property">width</span>: <span class="css-value">300px</span>; <span class="comment">/* لازم يكون له عرض محدد */</span>
+}</pre>
+        </div>
+
+        <div class="comparison">
+            <div class="comp-item">
+                <h4>بدون Margin</h4>
+                <div style="background: #f8f9fa; padding: 10px;">
+                    <div style="background: #667eea; color: white; padding: 15px; margin: 0;">صندوق 1</div>
+                    <div style="background: #e74c3c; color: white; padding: 15px; margin: 0;">صندوق 2</div>
+                </div>
+            </div>
+            <div class="comp-item">
+                <h4>مع Margin: 15px</h4>
+                <div style="background: #f8f9fa; padding: 10px;">
+                    <div style="background: #667eea; color: white; padding: 15px; margin: 15px;">صندوق 1</div>
+                    <div style="background: #e74c3c; color: white; padding: 15px; margin: 15px;">صندوق 2</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="warn">
+            <strong>⚠️ الفرق بين Padding و Margin:</strong><br>
+            <strong>Padding</strong> = داخل العنصر (يزيد حجمه، يأخذ لون الخلفية)<br>
+            <strong>Margin</strong> = خارج العنصر (لا يأخذ لون الخلفية، شفاف)
+        </div>
+    </section>
+
+    <!-- ═══════ BOX-SIZING ═══════ -->
+    <section class="section">
+        <h2 class="section-title">box-sizing: border-box — الحل السحري! ✨</h2>
+
+        <div class="content-box">
+            <p><strong>المشكلة:</strong> عندما نضع <code>width: 200px</code> + <code>padding: 20px</code> + <code>border: 5px</code></p>
+            <p>الحجم النهائي = 200 + (20×2) + (5×2) = <strong>250px</strong> 😱</p>
+        </div>
+
+        <div class="note">
+            <strong>⚠️ هذا يسبب مشاكل كثيرة!</strong> خصوصاً في التصميمات المتجاوبة.
+        </div>
+
+        <h3 style="color: var(--primary-dark); margin: 25px 0 15px;">🎯 الحل: box-sizing: border-box</h3>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">box-sizing.css</div>
+            </div>
+<pre><span class="comment">/* نضعها في بداية ملف CSS */</span>
+<span class="selector">*</span> {
+    <span class="property">box-sizing</span>: <span class="css-value">border-box</span>;
+}
+
+<span class="comment">/* الآن: width = الحجم الكلي الفعلي شاملاً padding و border */</span>
+<span class="selector">.box</span> {
+    <span class="property">width</span>: <span class="css-value">200px</span>;
+    <span class="property">padding</span>: <span class="css-value">20px</span>;
+    <span class="property">border</span>: <span class="css-value">5px solid #333</span>;
+    <span class="comment">/* الحجم النهائي = 200px فقط! ✅ */</span>
+}</pre>
+        </div>
+
+        <div class="tip">
+            <strong>💡 نصيحة ذهبية:</strong> ضع دائماً في بداية ملف CSS:<br>
+            <code>* { box-sizing: border-box; }</code><br>
+            هذا سيوفر عليك الكثير من المشاكل!
+        </div>
+    </section>
+
+    <!-- ═══════ PROJECT ═══════ -->
+    <section class="section">
+        <h2 class="section-title">المشروع العملي: بطاقة منتج احترافية 🛍️</h2>
+
+        <p>الآن سنطبق كل ما تعلمناه في مشروع حقيقي! 🎉</p>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">product-card.html</div>
+            </div>
+<pre><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span><span class="equals">=</span><span class="value">"ar"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span><span class="equals">=</span><span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span><span class="text">بطاقة منتج</span><span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;style&gt;</span>
+        <span class="selector">*</span> {
+            <span class="property">box-sizing</span>: <span class="css-value">border-box</span>;
+        }
+
+        <span class="selector">body</span> {
+            <span class="property">background-color</span>: <span class="css-value">#f0f0f0</span>;
+            <span class="property">font-family</span>: <span class="css-value">Arial, sans-serif</span>;
+            <span class="property">padding</span>: <span class="css-value">40px</span>;
+        }
+
+        <span class="selector">.product-card</span> {
+            <span class="property">background-color</span>: <span class="css-value">white</span>;
+            <span class="property">width</span>: <span class="css-value">300px</span>;
+            <span class="property">border-radius</span>: <span class="css-value">15px</span>;
+            <span class="property">margin</span>: <span class="css-value">0 auto</span>; <span class="comment">/* توسيط */</span>
+            <span class="property">border</span>: <span class="css-value">2px solid #ddd</span>;
+        }
+
+        <span class="selector">.product-image</span> {
+            <span class="property">background-color</span>: <span class="css-value">#667eea</span>;
+            <span class="property">height</span>: <span class="css-value">200px</span>;
+            <span class="property">border-radius</span>: <span class="css-value">15px 15px 0 0</span>;
+            <span class="property">color</span>: <span class="css-value">white</span>;
+            <span class="property">font-size</span>: <span class="css-value">60px</span>;
+            <span class="property">text-align</span>: <span class="css-value">center</span>;
+            <span class="property">padding-top</span>: <span class="css-value">60px</span>;
+        }
+
+        <span class="selector">.product-info</span> {
+            <span class="property">padding</span>: <span class="css-value">25px</span>;
+        }
+
+        <span class="selector">.product-title</span> {
+            <span class="property">font-size</span>: <span class="css-value">24px</span>;
+            <span class="property">font-weight</span>: <span class="css-value">bold</span>;
+            <span class="property">color</span>: <span class="css-value">#2c3e50</span>;
+            <span class="property">margin-bottom</span>: <span class="css-value">10px</span>;
+        }
+
+        <span class="selector">.product-price</span> {
+            <span class="property">font-size</span>: <span class="css-value">28px</span>;
+            <span class="property">color</span>: <span class="css-value">#27ae60</span>;
+            <span class="property">font-weight</span>: <span class="css-value">bold</span>;
+            <span class="property">margin</span>: <span class="css-value">15px 0</span>;
+        }
+
+        <span class="selector">.product-desc</span> {
+            <span class="property">color</span>: <span class="css-value">#7f8c8d</span>;
+            <span class="property">font-size</span>: <span class="css-value">14px</span>;
+            <span class="property">margin-bottom</span>: <span class="css-value">20px</span>;
+        }
+
+        <span class="selector">.buy-btn</span> {
+            <span class="property">background-color</span>: <span class="css-value">#667eea</span>;
+            <span class="property">color</span>: <span class="css-value">white</span>;
+            <span class="property">padding</span>: <span class="css-value">15px 30px</span>;
+            <span class="property">border</span>: <span class="css-value">none</span>;
+            <span class="property">border-radius</span>: <span class="css-value">10px</span>;
+            <span class="property">font-size</span>: <span class="css-value">16px</span>;
+            <span class="property">font-weight</span>: <span class="css-value">bold</span>;
+            <span class="property">width</span>: <span class="css-value">100%</span>;
+        }
+    <span class="tag">&lt;/style&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span><span class="equals">=</span><span class="value">"product-card"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attr">class</span><span class="equals">=</span><span class="value">"product-image"</span><span class="tag">&gt;</span>
+            <span class="text">📱</span>
+        <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attr">class</span><span class="equals">=</span><span class="value">"product-info"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;div</span> <span class="attr">class</span><span class="equals">=</span><span class="value">"product-title"</span><span class="tag">&gt;</span><span class="text">هاتف ذكي</span><span class="tag">&lt;/div&gt;</span>
+            <span class="tag">&lt;div</span> <span class="attr">class</span><span class="equals">=</span><span class="value">"product-price"</span><span class="tag">&gt;</span><span class="text">2,999 جنيه</span><span class="tag">&lt;/div&gt;</span>
+            <span class="tag">&lt;p</span> <span class="attr">class</span><span class="equals">=</span><span class="value">"product-desc"</span><span class="tag">&gt;</span>
+                <span class="text">هاتف بمواصفات عالية وسعر ممتاز</span>
+            <span class="tag">&lt;/p&gt;</span>
+            <span class="tag">&lt;button</span> <span class="attr">class</span><span class="equals">=</span><span class="value">"buy-btn"</span><span class="tag">&gt;</span><span class="text">🛒 أضف للسلة</span><span class="tag">&lt;/button&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></pre>
+        </div>
+
+        <div class="output">
+            <div class="product-card">
+                <div class="product-image">📱</div>
+                <div class="product-info">
+                    <div class="product-title">هاتف ذكي</div>
+                    <div class="product-price">2,999 جنيه</div>
+                    <p class="product-desc">هاتف بمواصفات عالية وسعر ممتاز</p>
+                    <button class="product-btn">🛒 أضف للسلة</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tip">
+            <strong>🎉 تحليل المشروع:</strong>
+            <ul style="padding-right: 20px; margin-top: 8px;">
+                <li>✅ استخدمنا <code>box-sizing: border-box</code></li>
+                <li>✅ <code>padding</code> لإعطاء مساحة للمحتوى</li>
+                <li>✅ <code>border-radius</code> للزوايا المدورة</li>
+                <li>✅ <code>margin: 0 auto</code> للتوسيط</li>
+                <li>✅ <code>border</code> لإطار جميل</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ═══════ SUMMARY ═══════ -->
+    <section class="section">
+        <h2 class="section-title">ملخص المحاضرة</h2>
+        <div class="summary">
+            <h3>✅ ما تعلمناه اليوم</h3>
+            <ul>
+                <li>Box Model = 4 أجزاء: Content, Padding, Border, Margin</li>
+                <li>Padding = مسافة داخلية (داخل العنصر)</li>
+                <li>Margin = مسافة خارجية (خارج العنصر)</li>
+                <li>Border = الحد/الإطار حول العنصر</li>
+                <li>border-radius للزوايا المدورة</li>
+                <li>box-sizing: border-box — الحل السحري!</li>
+                <li>margin: 0 auto للتوسيط الأفقي</li>
+                <li>بنينا بطاقة منتج احترافية كاملة! 🛍️</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ═══════ QUIZ ═══════ -->
+    <div class="quiz">
+        <h3>🧠 اختبر نفسك — 10 أسئلة</h3>
+
+        <div class="question">
+            <h4>السؤال 1: كم عدد أجزاء Box Model؟</h4>
+            <ul class="options ar">
+                <li>A) جزأين</li>
+                <li>B) 3 أجزاء</li>
+                <li>C) 4 أجزاء</li>
+                <li>D) 5 أجزاء</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 2: ما هو Padding؟</h4>
+            <ul class="options ar">
+                <li>A) المسافة خارج العنصر</li>
+                <li>B) المسافة داخل العنصر (بين المحتوى والحد)</li>
+                <li>C) الحد حول العنصر</li>
+                <li>D) حجم المحتوى</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 3: ما هو Margin؟</h4>
+            <ul class="options ar">
+                <li>A) المسافة داخل العنصر</li>
+                <li>B) المسافة خارج العنصر (بينه وبين العناصر الأخرى)</li>
+                <li>C) الحد حول العنصر</li>
+                <li>D) لون الخلفية</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 4: كيف نكتب border كامل بطريقة مختصرة؟</h4>
+            <ul class="options">
+                <li>A) border: 3px #333 solid</li>
+                <li>B) border: 3px solid #333</li>
+                <li>C) border: solid 3px #333</li>
+                <li>D) كل الإجابات صحيحة</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 5: ما وظيفة border-radius؟</h4>
+            <ul class="options ar">
+                <li>A) تغيير لون الحد</li>
+                <li>B) تدوير الزوايا</li>
+                <li>C) زيادة سُمك الحد</li>
+                <li>D) حذف الحد</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 6: كيف نوسط عنصر أفقياً بـ margin؟</h4>
+            <ul class="options">
+                <li>A) margin: auto</li>
+                <li>B) margin: 0 auto</li>
+                <li>C) margin: center</li>
+                <li>D) margin: auto 0</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 7: ما فائدة box-sizing: border-box؟</h4>
+            <ul class="options ar">
+                <li>A) يجعل width يشمل padding و border</li>
+                <li>B) يحذف الـ padding</li>
+                <li>C) يكبر العنصر</li>
+                <li>D) لا فائدة له</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 8: ما معنى padding: 10px 20px؟</h4>
+            <ul class="options ar">
+                <li>A) أعلى 10px، باقي الجوانب 20px</li>
+                <li>B) أعلى/أسفل 10px، يمين/يسار 20px</li>
+                <li>C) كل الجوانب 10px</li>
+                <li>D) خطأ في الكتابة</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 9: أي خاصية تتحكم في عرض العنصر؟</h4>
+            <ul class="options">
+                <li>A) size</li>
+                <li>B) width</li>
+                <li>C) length</li>
+                <li>D) dimension</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 10: ما الفرق الرئيسي بين Padding و Margin؟</h4>
+            <ul class="options ar">
+                <li>A) لا يوجد فرق</li>
+                <li>B) Padding داخل العنصر، Margin خارجه</li>
+                <li>C) Padding للألوان، Margin للمسافات</li>
+                <li>D) Padding أسرع من Margin</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ═══════ HOMEWORK ═══════ -->
+    <div class="homework">
+        <h3>📝 الواجب — 5 مسائل</h3>
+
+        <div class="task">
+            <h4>المسألة 1: تجارب Box Model</h4>
+            <p><strong>المطلوب:</strong> أنشئ 4 صناديق ملونة، كل واحد يوضح جزء من Box Model:</p>
+            <ul>
+                <li>صندوق 1: padding كبير (30px)</li>
+                <li>صندوق 2: border سميك (10px) ملون</li>
+                <li>صندوق 3: margin كبير (40px)</li>
+                <li>صندوق 4: يجمع الثلاثة معاً</li>
+            </ul>
+        </div>
+
+        <div class="task">
+            <h4>المسألة 2: بطاقات منتجات</h4>
+            <p><strong>المطلوب:</strong> أنشئ 3 بطاقات منتجات بجانب بعض:</p>
+            <ul>
+                <li>كل بطاقة لها: صورة (emoji)، عنوان، سعر، وصف، زر</li>
+                <li>استخدم padding مناسب</li>
+                <li>استخدم border-radius للزوايا المدورة</li>
+                <li>استخدم margin لإبعاد البطاقات عن بعضها</li>
+            </ul>
+        </div>
+
+        <div class="task">
+            <h4>المسألة 3: زر احترافي</h4>
+            <p><strong>المطلوب:</strong> صمم 5 أزرار مختلفة الأشكال:</p>
+            <ul>
+                <li>زر بزوايا حادة</li>
+                <li>زر بزوايا مدورة قليلاً (5px)</li>
+                <li>زر بزوايا مدورة جداً (25px)</li>
+                <li>زر دائري تماماً</li>
+                <li>زر بحد ملون وخلفية شفافة</li>
+            </ul>
+        </div>
+
+        <div class="task">
+            <h4>المسألة 4: التوسيط</h4>
+            <p><strong>المطلوب:</strong> أنشئ صندوق ووسطه في الصفحة بطريقتين:</p>
+            <ul>
+                <li>الطريقة 1: margin: 0 auto</li>
+                <li>اجعل الصندوق له: عرض 400px، padding 30px، border 3px، border-radius 15px</li>
+            </ul>
+        </div>
+
+        <div class="task">
+            <h4>المسألة 5: 🏆 مشروع كامل — متجر بسيط</h4>
+            <p><strong>المطلوب:</strong> ابنِ صفحة متجر بسيطة تحتوي على:</p>
+            <ul>
+                <li>عنوان رئيسي في الأعلى (مع padding و border-bottom)</li>
+                <li>3 بطاقات منتجات على الأقل</li>
+                <li>كل بطاقة لها:
+                    <ul>
+                        <li>صورة (emoji أو لون خلفية)</li>
+                        <li>اسم المنتج</li>
+                        <li>السعر</li>
+                        <li>وصف قصير</li>
+                        <li>زر "أضف للسلة"</li>
+                    </ul>
+                </li>
+                <li>استخدم box-sizing: border-box</li>
+                <li>استخدم padding و margin و border-radius بشكل احترافي</li>
+                <li>اجعل البطاقات موسطة في الصفحة</li>
+            </ul>
+        </div>
+
+        <div class="tip" style="margin-top: 20px;">
+            <strong>💡 نصيحة:</strong> افتح Developer Tools في المتصفح (F12) واذهب لتبويب "Elements" — ستجد رسم Box Model لأي عنصر تختاره!
+        </div>
+    </div>
+
+    <!-- ═══════ FOOTER ═══════ -->
+    <footer class="footer">
+        <p><strong>Sunshine T Academy</strong></p>
+        <p>"بنحوّل الحلم لكود"</p>
+        <p>Frontend Development Course — المحاضرة السادسة</p>
+        <div class="next-lecture">
+            📐 المحاضرة القادمة: <strong>Display & Positioning — التخطيط والمواضع</strong><br>
+            <small>سنتعلم كيف نتحكم في مواضع العناصر في الصفحة!</small>
+        </div>
+    </footer>
+
+</div>
+</body>
+</html>

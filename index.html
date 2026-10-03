@@ -1,0 +1,3169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة السادسة | CSS Fundamentals | Sunshine T Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4A7C59;
+            --primary-dark: #2D5F3F;
+            --primary-light: #7BA889;
+            --primary-soft: #D4E5D8;
+
+            --secondary: #D4A574;
+            --secondary-dark: #B8895A;
+            --secondary-light: #E8C9A0;
+
+            --bg-main: #FAF7F2;
+            --bg-cream: #F5EFE6;
+            --bg-card: #FFFFFF;
+            --bg-soft: #EDE5D8;
+            --bg-code: #F9F6F0;
+
+            --text-dark: #2C1810;
+            --text-body: #4A3728;
+            --text-muted: #6B5744;
+            --text-light: #8B7356;
+
+            --border: #E5DCC8;
+            --border-soft: #EDE5D8;
+
+            --success: #5B8C5A;
+            --success-bg: #E3EDDF;
+            --info: #5B8BA0;
+            --info-bg: #DEE8EC;
+            --warning: #C89B6C;
+            --warning-bg: #F0E4D4;
+            --danger: #B85C5C;
+            --danger-bg: #F0DCDC;
+            --purple: #8B7BA8;
+            --purple-bg: #E5DFED;
+            --css-color: #264DE4;
+            --css-light: #E8EDFB;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-body);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== Header ========== */
+        header {
+            background: linear-gradient(135deg, #FAF7F2 0%, #EDE5D8 100%);
+            border-bottom: 3px solid var(--primary);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(74, 124, 89, 0.08);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 900;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(74, 124, 89, 0.25);
+        }
+
+        .lecture-badge {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            color: var(--primary-dark);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* ========== Hero ========== */
+        .hero {
+            padding: 70px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #D4E5D8 0%, #E8C9A0 50%, #F5EFE6 100%);
+            border: 2px solid var(--primary-light);
+            border-radius: 24px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(74, 124, 89, 0.12);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: var(--primary-dark);
+            color: var(--secondary-light);
+            padding: 8px 22px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 18px;
+            color: var(--text-dark);
+            line-height: 1.3;
+            position: relative;
+        }
+
+        .hero h1 span {
+            color: var(--css-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-body);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* ========== Sections ========== */
+        section {
+            margin: 60px 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--border);
+        }
+
+        .section-title .title-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            color: white;
+            box-shadow: 0 4px 12px rgba(74, 124, 89, 0.2);
+        }
+
+        /* ========== Cards ========== */
+        .card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-soft);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(74, 124, 89, 0.04);
+        }
+
+        .card:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 8px 24px rgba(74, 124, 89, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card p {
+            color: var(--text-body);
+            margin-bottom: 12px;
+        }
+
+        .card strong {
+            color: var(--text-dark);
+        }
+
+        /* ========== Objectives ========== */
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .objective-item {
+            background: var(--bg-card);
+            border: 2px solid var(--border-soft);
+            border-right: 5px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: start;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .objective-item:hover {
+            border-color: var(--primary-light);
+            border-right-color: var(--secondary);
+            background: var(--bg-cream);
+        }
+
+        .objective-number {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            flex-shrink: 0;
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(74, 124, 89, 0.25);
+        }
+
+        .objective-item h4 {
+            color: var(--text-dark);
+            font-size: 1.05rem;
+            margin-bottom: 5px;
+        }
+
+        .objective-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ========== Review Box ========== */
+        .review-box {
+            background: linear-gradient(135deg, var(--purple-bg) 0%, #F5F3FF 100%);
+            border: 2px solid var(--purple);
+            border-radius: 16px;
+            padding: 28px;
+            margin: 30px 0;
+        }
+
+        .review-box h3 {
+            color: var(--purple);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .review-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+        }
+
+        .review-list li {
+            background: var(--bg-card);
+            border: 1px solid #D4C9E8;
+            border-radius: 10px;
+            padding: 12px 16px;
+            padding-right: 40px;
+            position: relative;
+            color: var(--text-body);
+        }
+
+        .review-list li::before {
+            content: '✓';
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--purple);
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+
+        /* ========== Analogy Box ========== */
+        .analogy-box {
+            background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-soft) 100%);
+            border: 2px dashed var(--secondary);
+            border-radius: 16px;
+            padding: 28px;
+            margin: 30px 0;
+        }
+
+        .analogy-box h3 {
+            color: var(--secondary-dark);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .analogy-list {
+            list-style: none;
+        }
+
+        .analogy-list li {
+            padding: 12px 0;
+            padding-right: 40px;
+            position: relative;
+            color: var(--text-body);
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .analogy-list li:last-child {
+            border-bottom: none;
+        }
+
+        .analogy-list li::before {
+            content: '💡';
+            position: absolute;
+            right: 0;
+            top: 12px;
+            font-size: 1.2rem;
+        }
+
+        .analogy-list li strong {
+            color: var(--primary-dark);
+        }
+
+        /* ========== Code Blocks ========== */
+        .code-wrapper {
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--border);
+            background: var(--bg-code);
+            box-shadow: 0 4px 12px rgba(74, 124, 89, 0.06);
+        }
+
+        .code-header {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 10px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-lang {
+            background: var(--text-dark);
+            color: var(--secondary-light);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .code-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .code-dots span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .code-dots span:nth-child(1) { background: #E8A5A5; }
+        .code-dots span:nth-child(2) { background: #E8D4A0; }
+        .code-dots span:nth-child(3) { background: #A5D4B0; }
+
+        pre {
+            padding: 20px;
+            overflow-x: auto;
+            margin: 0;
+            background: var(--bg-code);
+        }
+
+        pre code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.92rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+            display: block;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .tag { color: #A0522D; font-weight: 600; }
+        .attr { color: #2E6B8A; font-weight: 600; }
+        .value { color: #4A7C59; }
+        .comment { color: #8B7356; font-style: italic; }
+        .text { color: var(--text-dark); }
+        .doctype { color: #A0522D; font-weight: 700; }
+
+        /* CSS Syntax */
+        .selector { color: #8B2252; font-weight: 700; }
+        .property { color: #0550AE; }
+        .css-value { color: #116329; }
+        .css-number { color: #0550AE; }
+        .css-unit { color: #953800; }
+        .css-color-val { color: #6639BA; }
+        .punctuation { color: #6B5744; }
+
+        /* ========== Info Boxes ========== */
+        .info-box {
+            background: var(--info-bg);
+            border: 2px solid #B8D4DE;
+            border-right-width: 5px;
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #2E6B8A;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .info-box p {
+            color: #1F4A5E;
+            font-size: 0.95rem;
+        }
+
+        .warning-box {
+            background: var(--warning-bg);
+            border: 2px solid #E5D4B8;
+            border-right-width: 5px;
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: var(--secondary-dark);
+            margin-bottom: 8px;
+        }
+
+        .warning-box p {
+            color: var(--text-body);
+            font-size: 0.95rem;
+        }
+
+        .success-box {
+            background: var(--success-bg);
+            border: 2px solid #B8D4B5;
+            border-right-width: 5px;
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin: 20px 0;
+        }
+
+        .success-box h4 {
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+
+        .success-box p {
+            color: #2D5F3F;
+            font-size: 0.95rem;
+        }
+
+        .danger-box {
+            background: var(--danger-bg);
+            border: 2px solid #E0B8B8;
+            border-right-width: 5px;
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin: 20px 0;
+        }
+
+        .danger-box h4 {
+            color: #8B3A3A;
+            margin-bottom: 8px;
+        }
+
+        .danger-box p {
+            color: #5C2828;
+            font-size: 0.95rem;
+        }
+
+        /* ========== Element Table ========== */
+        .element-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .element-table thead {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+
+        .element-table th {
+            padding: 14px 18px;
+            text-align: right;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .element-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-soft);
+            color: var(--text-body);
+        }
+
+        .element-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .element-table tr:hover {
+            background: var(--bg-cream);
+        }
+
+        .element-table code {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            padding: 3px 8px;
+            border-radius: 5px;
+            color: var(--primary-dark);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.88rem;
+            font-weight: 600;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        /* ========== Tag Card Grid ========== */
+        .tag-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin: 25px 0;
+        }
+
+        .tag-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-soft);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tag-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .tag-card:hover {
+            border-color: var(--primary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(74, 124, 89, 0.1);
+        }
+
+        .tag-card .tag-name {
+            font-family: 'Fira Code', monospace;
+            background: var(--bg-code);
+            color: var(--primary-dark);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            direction: ltr;
+        }
+
+        .tag-card h5 {
+            color: var(--text-dark);
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+
+        .tag-card p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        /* ========== Methods Comparison ========== */
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .method-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-soft);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .method-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+        }
+
+        .method-card.inline::before { background: var(--danger); }
+        .method-card.internal::before { background: var(--warning); }
+        .method-card.external::before { background: var(--success); }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(74, 124, 89, 0.12);
+        }
+
+        .method-card .method-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .method-card h4 {
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .method-card .method-desc {
+            color: var(--text-body);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .method-card .method-pros,
+        .method-card .method-cons {
+            font-size: 0.85rem;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .method-card .method-pros {
+            background: var(--success-bg);
+            color: #2D5F3F;
+        }
+
+        .method-card .method-cons {
+            background: var(--danger-bg);
+            color: #5C2828;
+        }
+
+        .method-card .method-verdict {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed var(--border);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .method-card.inline .method-verdict { color: var(--danger); }
+        .method-card.internal .method-verdict { color: var(--warning); }
+        .method-card.external .method-verdict { color: var(--success); }
+
+        /* ========== Selector Visual ========== */
+        .selector-visual {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .selector-example {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+            padding: 20px;
+            background: var(--bg-cream);
+            border-radius: 12px;
+        }
+
+        .selector-code {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .selector-preview {
+            background: var(--bg-card);
+            border: 2px dashed var(--primary-light);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .selector-preview .highlighted {
+            background: var(--primary-soft);
+            border: 2px solid var(--primary);
+            border-radius: 6px;
+            padding: 8px;
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        .selector-preview .normal {
+            background: var(--bg-cream);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px;
+            color: var(--text-muted);
+        }
+
+        /* ========== Color Swatches ========== */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .color-swatch {
+            background: var(--bg-card);
+            border: 2px solid var(--border-soft);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .color-swatch:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(74, 124, 89, 0.1);
+        }
+
+        .color-swatch .swatch-preview {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .color-swatch .swatch-info {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .color-swatch .swatch-name {
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+
+        .color-swatch .swatch-code {
+            font-family: 'Fira Code', monospace;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            direction: ltr;
+        }
+
+        /* ========== Units Visual ========== */
+        .units-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .unit-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-soft);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .unit-card:hover {
+            border-color: var(--primary-light);
+            transform: translateY(-3px);
+        }
+
+        .unit-card .unit-symbol {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--css-color);
+            margin-bottom: 10px;
+            direction: ltr;
+        }
+
+        .unit-card .unit-name {
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .unit-card .unit-desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* ========== Specificity Visual ========== */
+        .specificity-visual {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .specificity-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 15px;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .specificity-row:last-child {
+            border-bottom: none;
+        }
+
+        .specificity-row .selector-name {
+            font-family: 'Fira Code', monospace;
+            color: var(--css-color);
+            font-weight: 700;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .specificity-row .specificity-score {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+
+        .specificity-row .score-box {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-cream);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .specificity-row .score-box.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary-dark);
+        }
+
+        .specificity-row .specificity-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* ========== Live Demo ========== */
+        .live-demo {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .live-demo h4 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .demo-box {
+            background: var(--bg-cream);
+            border: 2px dashed var(--primary-light);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .demo-colored {
+            background: #FFE5B4;
+            color: #8B4513;
+            padding: 15px;
+            border-radius: 10px;
+            border: 3px solid #D2691E;
+            margin: 10px 0;
+        }
+
+        .demo-gradient {
+            background: linear-gradient(135deg, #4A7C59 0%, #D4A574 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-weight: 800;
+        }
+
+        /* ========== Debug Section ========== */
+        .debug-box {
+            background: var(--danger-bg);
+            border: 2px solid var(--danger);
+            border-radius: 16px;
+            padding: 28px;
+            margin: 30px 0;
+        }
+
+        .debug-box h3 {
+            color: #8B3A3A;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+        }
+
+        .debug-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .debug-wrong, .debug-right {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .debug-wrong {
+            border: 2px solid var(--danger);
+        }
+
+        .debug-right {
+            border: 2px solid var(--success);
+        }
+
+        .debug-label {
+            padding: 8px 15px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .debug-wrong .debug-label {
+            background: var(--danger);
+            color: white;
+        }
+
+        .debug-right .debug-label {
+            background: var(--success);
+            color: white;
+        }
+
+        .debug-wrong pre, .debug-right pre {
+            background: var(--bg-card);
+            padding: 15px;
+            margin: 0;
+        }
+
+        /* ========== Quiz Section ========== */
+        .quiz-section {
+            background: var(--bg-card);
+            border: 3px solid var(--success);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 40px 0;
+            box-shadow: 0 8px 24px rgba(91, 140, 90, 0.1);
+        }
+
+        .quiz-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 3px dashed var(--success-bg);
+        }
+
+        .quiz-header-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--success) 0%, var(--primary-dark) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 4px 12px rgba(91, 140, 90, 0.25);
+        }
+
+        .quiz-header h2 {
+            color: var(--primary-dark);
+            font-size: 1.6rem;
+        }
+
+        .quiz-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .question {
+            background: var(--bg-cream);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            border-color: var(--primary-light);
+            background: var(--bg-soft);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 6px rgba(74, 124, 89, 0.25);
+        }
+
+        .question h4 {
+            color: var(--text-dark);
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .options {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        .options li {
+            background: var(--bg-card);
+            border: 2px solid var(--border-soft);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--text-body);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .options li:hover {
+            border-color: var(--primary-light);
+            background: var(--bg-cream);
+            color: var(--text-dark);
+        }
+
+        .option-letter {
+            width: 28px;
+            height: 28px;
+            background: var(--bg-soft);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+            flex-shrink: 0;
+        }
+
+        /* ========== Homework Section ========== */
+        .homework-section {
+            background: var(--bg-card);
+            border: 3px solid var(--info);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 40px 0;
+            box-shadow: 0 8px 24px rgba(91, 139, 160, 0.1);
+        }
+
+        .homework-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 3px dashed var(--info-bg);
+        }
+
+        .homework-header-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--info) 0%, #3D6B80 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 4px 12px rgba(91, 139, 160, 0.25);
+        }
+
+        .homework-header h2 {
+            color: #2E6B8A;
+            font-size: 1.6rem;
+        }
+
+        .homework-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .homework-item {
+            background: var(--bg-cream);
+            border: 2px solid var(--border);
+            border-right: 5px solid var(--info);
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .homework-item:hover {
+            border-color: var(--info);
+            background: var(--info-bg);
+        }
+
+        .homework-item h4 {
+            color: #2E6B8A;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .homework-item p {
+            color: var(--text-body);
+            margin-bottom: 10px;
+        }
+
+        .homework-item ul {
+            list-style: none;
+            padding-right: 0;
+        }
+
+        .homework-item ul li {
+            padding: 6px 0;
+            padding-right: 25px;
+            position: relative;
+            color: var(--text-body);
+            font-size: 0.95rem;
+        }
+
+        .homework-item ul li::before {
+            content: '◆';
+            position: absolute;
+            right: 0;
+            color: var(--info);
+            font-size: 0.7rem;
+            top: 10px;
+        }
+
+        /* ========== Summary ========== */
+        .summary-box {
+            background: linear-gradient(135deg, var(--primary-soft) 0%, var(--bg-soft) 100%);
+            border: 3px solid var(--primary);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 8px 24px rgba(74, 124, 89, 0.1);
+        }
+
+        .summary-box h3 {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .summary-list {
+            list-style: none;
+        }
+
+        .summary-list li {
+            padding: 10px 0;
+            padding-right: 35px;
+            position: relative;
+            color: var(--text-body);
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .summary-list li:last-child {
+            border-bottom: none;
+        }
+
+        .summary-list li::before {
+            content: '✓';
+            position: absolute;
+            right: 0;
+            color: var(--success);
+            font-weight: 900;
+            font-size: 1.3rem;
+        }
+
+        /* ========== Next Lecture Box ========== */
+        .next-box {
+            background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-soft) 100%);
+            border: 2px dashed var(--secondary);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .next-box h3 {
+            color: var(--secondary-dark);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .next-box p {
+            color: var(--text-body);
+            font-size: 1.05rem;
+        }
+
+        .next-box .next-topic {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        /* ========== Footer ========== */
+        footer {
+            background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-soft) 100%);
+            border-top: 3px solid var(--primary);
+            padding: 40px 0;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        footer .logo {
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        footer .motto {
+            color: var(--primary-dark);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 15px;
+        }
+
+        /* ========== Inline Code ========== */
+        code.inline {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            padding: 2px 8px;
+            border-radius: 5px;
+            color: var(--css-color);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.88rem;
+            font-weight: 600;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        /* ========== Print Styles ========== */
+        @media print {
+            @page {
+                size: A4;
+                margin: 1.5cm;
+            }
+
+            body {
+                background: white;
+                font-size: 11pt;
+                line-height: 1.5;
+            }
+
+            header {
+                position: static;
+                box-shadow: none;
+            }
+
+            .hero, section, .card, .question, .homework-item {
+                page-break-inside: avoid;
+            }
+
+            h1, h2, h3, h4 {
+                page-break-after: avoid;
+            }
+
+            .code-wrapper {
+                page-break-inside: avoid;
+            }
+
+            .methods-grid, .debug-comparison, .selector-example {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .section-title { font-size: 1.5rem; }
+            .objectives-grid { grid-template-columns: 1fr; }
+            .tag-grid { grid-template-columns: 1fr; }
+            .methods-grid { grid-template-columns: 1fr; }
+            .debug-comparison { grid-template-columns: 1fr; }
+            .selector-example { grid-template-columns: 1fr; }
+            .specificity-row { grid-template-columns: 1fr; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== Header ========== -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">S</div>
+                    <span>Sunshine T Academy</span>
+                </div>
+                <div class="lecture-badge">Frontend Level 1 • المحاضرة السادسة</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- ========== Hero ========== -->
+        <section class="hero">
+            <span class="hero-tag">LECTURE 06</span>
+            <h1><span>CSS</span> Fundamentals</h1>
+            <p>أهلاً بيك في عالم الألوان والتصميم! النهاردة هنبدأ رحلة CSS — الأداة اللي بتحول الصفحة من هيكل بسيط لموقع جميل ومنسق.</p>
+        </section>
+
+        <!-- ========== Review Previous ========== -->
+        <section>
+            <h2 class="section-title">
+                <div class="title-icon">🔄</div>
+                <span>مراجعة سريعة</span>
+            </h2>
+
+            <div class="review-box">
+                <h3>📚 من المحاضرة اللي فاتت</h3>
+                <ul class="review-list">
+                    <li>HTML = هيكل الصفحة (العظام)</li>
+                    <li>CSS = تصميم الصفحة (الملابس)</li>
+                    <li>JavaScript = تفاعل الصفحة (العضلات)</li>
+                    <li>audio, video, iframe للوسائط</li>
+                    <li>Meta Tags, Favicon, Open Graph</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4>🎉 مبروك! دخلنا مرحلة CSS</h4>
+                <p>خلال المحاضرات الخمس اللي فاتت، بنينا أساس HTML قوي. النهاردة بنبدأ <strong>CSS</strong> — اللي بيخلي الصفحة حلوة ومنظمة. تخيل إن HTML هو البيت، و CSS هو الدهان والديكور والأثاث.</p>
+            </div>
+        </section>
+
+        <!-- ========== Learning Objectives ========== -->
+        <section>
+            <h2 class="section-title">
+                <div class="title-icon">🎯</div>
+                <span>الأهداف التعليمية</span>
+            </h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">في نهاية المحاضرة، الطالب هيقدر:</p>
+
+            <div class="objectives-grid">
+                <div class="objective-item">
+                    <div class="objective-number">1</div>
+                    <div>
+                        <h4>فهم CSS</h4>
+                        <p>يعرف ما هو CSS وليه مهم</p>
+                    </div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-number">2</div>
+                    <div>
+                        <h4>طرق إضافة CSS</h4>
+                        <p>Inline, Internal, External</p>
+                    </div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-number">3</div>
+                    <div>
+                        <h4>Selectors</h4>
+                        <p>Element, Class, ID, Universal, Grouping, Descendant</p>
+                    </div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-number">4</div>
+                    <div>
+                        <h4>Specificity</h4>
+                        <p>يفهم أولوية الـ Selectors</p>
+                    </div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-number">5</div>
+                    <div>
+                        <h4>Colors</h4>
+                        <p>Named, HEX, RGB, RGBA, HSL</p>
+                    </div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-number">6</div>
+                    <div>
+                        <h4>Backgrounds</h4>
+                        <p>color, image, size, position, repeat</p>
+                    </div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-number">7</div>
+                    <div>
+                        <h4>Units</h4>
+                        <p>px, %, em, rem, vw, vh</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== What is CSS? ========== -->
+        <section>
+            <h2 class="section-title">
+                <div class="title-icon">🎨</div>
+                <span>ما هو CSS؟</span>
+            </h2>
+
+            <div class="card">
+                <h3>📖 التعريف</h3>
+                <p><strong>CSS</strong> = <strong>C</strong>ascading <strong>S</strong>tyle <strong>S</strong>heets = أوراق الأنماط المتتالية.</p>
+                <p>CSS هي اللغة اللي بنستخدمها عشان <strong>نصمم وننسق</strong> صفحات HTML. بتتحكم في:</p>
+                <p>• الألوان والخطوط</p>
+                <p>• المسافات والأحجام</p>
+                <p>• ترتيب العناصر (Layout)</p>
+                <p>• الحركات والتأثيرات</p>
+                <p>• التجاوب مع الشاشات المختلفة</p>
+            </div>
+
+            <div class="analogy-box">
+                <h3>💡 تشبيه من الحياة</h3>
+                <ul class="analogy-list">
+                    <li><strong>HTML</strong> = هيكل البيت (الأعمدة، الجدران، الغرف)</li>
+                    <li><strong>CSS</strong> = الدهان، الديكور، الأثاث، الإضاءة</li>
+                    <li><strong>HTML بدون CSS</strong> = بيت بدون دهان ولا أثاث — هيكل بس</li>
+                    <li><strong>HTML مع CSS</strong> = بيت جميل ومنسق وجاهز للسكن</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>📐 شكل قاعدة CSS</h3>
+                <p>أي كود CSS بيتكون من جزئين أساسيين: <strong>Selector</strong> و <strong>Declaration Block</strong></p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — الشكل الأساسي</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="selector">selector</span> <span class="punctuation">{</span>
+    <span class="property">property</span><span class="punctuation">:</span> <span class="css-value">value</span><span class="punctuation">;</span>
+    <span class="property">property</span><span class="punctuation">:</span> <span class="css-value">value</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* مثال حقيقي */</span>
+<span class="selector">h1</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#4A7C59</span><span class="punctuation">;</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">32</span><span class="css-unit">px</span><span class="punctuation">;</span>
+    <span class="property">text-align</span><span class="punctuation">:</span> <span class="css-value">center</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <div class="card">
+                <h3>🔍 تشريح قاعدة CSS</h3>
+                <table class="element-table">
+                    <thead>
+                        <tr>
+                            <th>الجزء</th>
+                            <th>المعنى</th>
+                            <th>مثال</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Selector</strong></td>
+                            <td>العنصر اللي عايز تغيره</td>
+                            <td><code>h1</code>, <code>.class</code>, <code>#id</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Property</strong></td>
+                            <td>الخاصية اللي عايز تغيرها</td>
+                            <td><code>color</code>, <code>font-size</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Value</strong></td>
+                            <td>القيمة الجديدة</td>
+                            <td><code>red</code>, <code>20px</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Declaration</strong></td>
+                            <td>property + value + ;</td>
+                            <td><code>color: red;</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ========== 3 Ways to Add CSS ========== -->
+        <section>
+            <h2 class="section-title">
+                <div class="title-icon">🔌</div>
+                <span>3 طرق لإضافة CSS</span>
+            </h2>
+
+            <div class="card">
+                <h3>📖 الطرق الثلاثة</h3>
+                <p>في 3 طرق تقدر تضيف بيهم CSS لصفحة HTML. كل طريقة ليها استخداماتها ومميزاتها.</p>
+            </div>
+
+            <div class="methods-grid">
+                <div class="method-card inline">
+                    <div class="method-icon">📌</div>
+                    <h4>Inline CSS</h4>
+                    <p class="method-desc">جوه الـ HTML مباشرة بـ <code class="inline">style</code> attribute</p>
+                    <div class="method-pros">✓ سريع للتجربة</div>
+                    <div class="method-cons">✗ صعب الصيانة<br>✗ مفيش إعادة استخدام</div>
+                    <div class="method-verdict">⚠️ تجنبه قدر الإمكان</div>
+                </div>
+
+                <div class="method-card internal">
+                    <div class="method-icon">📄</div>
+                    <h4>Internal CSS</h4>
+                    <p class="method-desc">جوه <code class="inline">&lt;style&gt;</code> في الـ <code class="inline">&lt;head&gt;</code></p>
+                    <div class="method-pros">✓ منظم أكتر<br>✓ لصفحة واحدة</div>
+                    <div class="method-cons">✗ مش بيتشارك بين الصفحات</div>
+                    <div class="method-verdict">👍 كويس لصفحة واحدة</div>
+                </div>
+
+                <div class="method-card external">
+                    <div class="method-icon">🔗</div>
+                    <h4>External CSS</h4>
+                    <p class="method-desc">ملف <code class="inline">.css</code> منفصل بيتربط بـ <code class="inline">&lt;link&gt;</code></p>
+                    <div class="method-pros">✓ إعادة استخدام<br>✓ سهل الصيانة<br>✓ Cache في المتصفح</div>
+                    <div class="method-cons">✗ ملف إضافي</div>
+                    <div class="method-verdict">⭐ الأفضل — المحترفين بيستخدموه</div>
+                </div>
+            </div>
+
+            <!-- Inline CSS -->
+            <div class="card">
+                <h3>🔹 الطريقة الأولى: Inline CSS</h3>
+                <p>بتكتب CSS جوه الـ HTML مباشرة باستخدام attribute <code class="inline">style</code></p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">HTML — Inline CSS</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="tag">&lt;h1</span> <span class="attr">style</span>=<span class="value">"color: #4A7C59; font-size: 32px; text-align: center;"</span><span class="tag">&gt;</span>
+    <span class="text">مرحباً بيك</span>
+<span class="tag">&lt;/h1&gt;</span>
+
+<span class="tag">&lt;p</span> <span class="attr">style</span>=<span class="value">"color: #78350F; line-height: 1.8;"</span><span class="tag">&gt;</span>
+    <span class="text">دي فقرة نصية</span>
+<span class="tag">&lt;/p&gt;</span></code></pre>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ ليه Inline CSS مش مستحسن؟</h4>
+                <p>1. <strong>فوضى:</strong> الكود بيبقى مليان attributes في كل عنصر.</p>
+                <p>2. <strong>إعادة استخدام:</strong> لو عايز تغير اللون في 100 عنصر، لازم تغيرهم واحد واحد!</p>
+                <p>3. <strong>صيانة:</strong> صعب تعدل على الموقع بعدين.</p>
+            </div>
+
+            <!-- Internal CSS -->
+            <div class="card">
+                <h3>🔹 الطريقة الثانية: Internal CSS</h3>
+                <p>بتكتب CSS جوه <code class="inline">&lt;style&gt;</code> في الـ <code class="inline">&lt;head&gt;</code> من الصفحة.</p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">HTML — Internal CSS</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span><span class="text">صفحتي</span><span class="tag">&lt;/title&gt;</span>
+    
+    <span class="tag">&lt;style&gt;</span>
+        <span class="selector">h1</span> <span class="punctuation">{</span>
+            <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#4A7C59</span><span class="punctuation">;</span>
+            <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">32</span><span class="css-unit">px</span><span class="punctuation">;</span>
+            <span class="property">text-align</span><span class="punctuation">:</span> <span class="css-value">center</span><span class="punctuation">;</span>
+        <span class="punctuation">}</span>
+        
+        <span class="selector">p</span> <span class="punctuation">{</span>
+            <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#78350F</span><span class="punctuation">;</span>
+            <span class="property">line-height</span><span class="punctuation">:</span> <span class="css-number">1.8</span><span class="punctuation">;</span>
+        <span class="punctuation">}</span>
+    <span class="tag">&lt;/style&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;h1&gt;</span><span class="text">مرحباً بيك</span><span class="tag">&lt;/h1&gt;</span>
+    <span class="tag">&lt;p&gt;</span><span class="text">دي فقرة نصية</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/body&gt;</span></code></pre>
+            </div>
+
+            <!-- External CSS -->
+            <div class="card">
+                <h3>🔹 الطريقة الثالثة: External CSS (الأفضل)</h3>
+                <p>بتكتب CSS في ملف منفصل <code class="inline">.css</code> وبتربطه بالصفحة بـ <code class="inline">&lt;link&gt;</code></p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">style.css — ملف CSS منفصل</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="comment">/* ملف: css/style.css */</span>
+
+<span class="selector">h1</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#4A7C59</span><span class="punctuation">;</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">32</span><span class="css-unit">px</span><span class="punctuation">;</span>
+    <span class="property">text-align</span><span class="punctuation">:</span> <span class="css-value">center</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">p</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#78350F</span><span class="punctuation">;</span>
+    <span class="property">line-height</span><span class="punctuation">:</span> <span class="css-number">1.8</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">HTML — ربط الملف</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span><span class="text">صفحتي</span><span class="tag">&lt;/title&gt;</span>
+    
+    <span class="comment">&lt;!-- ربط ملف CSS --&gt;</span>
+    <span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span> <span class="attr">href</span>=<span class="value">"css/style.css"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;h1&gt;</span><span class="text">مرحباً بيك</span><span class="tag">&lt;/h1&gt;</span>
+    <span class="tag">&lt;p&gt;</span><span class="text">دي فقرة نصية</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/body&gt;</span></code></pre>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ ليه External CSS هو الأفضل؟</h4>
+                <p>1. <strong>فصل الاهتمامات:</strong> HTML للهيكل، CSS للتصميم.</p>
+                <p>2. <strong>إعادة استخدام:</strong> ملف CSS واحد لكل الموقع.</p>
+                <p>3. <strong>صيانة سهلة:</strong> غير اللون في مكان واحد، يتغير في كل الموقع.</p>
+                <p>4. <strong>Cache:</strong> المتصفح بيحفظ الملف، فبيحمل مرة واحدة بس.</p>
+            </div>
+
+            <div class="card">
+                <h3>📊 مقارنة سريعة</h3>
+                <table class="element-table">
+                    <thead>
+                        <tr>
+                            <th>الطريقة</th>
+                            <th>الاستخدام</th>
+                            <th>التوصية</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Inline</strong></td>
+                            <td>تجربة سريعة / تعديل صغير</td>
+                            <td>❌ تجنبها</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Internal</strong></td>
+                            <td>صفحة واحدة مستقلة</td>
+                            <td>👍 مقبولة</td>
+                        </tr>
+                        <tr>
+                            <td><strong>External</strong></td>
+                            <td>أي مشروع حقيقي</td>
+                            <td>⭐ الأفضل دائماً</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ========== Selectors ========== -->
+        <section>
+            <h2 class="section-title">
+                <div class="title-icon">🎯</div>
+                <span>CSS Selectors — الاختيار</span>
+            </h2>
+
+            <div class="card">
+                <h3>📖 ما هي Selectors؟</h3>
+                <p>الـ Selector هو اللي بيحدد <strong>إيه العنصر (أو العناصر)</strong> اللي عايز تطبق عليه التصميم. زي ما تختار أوضة في البيت عشان تدهنها.</p>
+            </div>
+
+            <!-- Element Selector -->
+            <div class="card">
+                <h3>🔹 1. Element Selector — اختيار العنصر</h3>
+                <p>بتختار العنصر باسمه. بيأثر على <strong>كل العناصر</strong> من النوع ده في الصفحة.</p>
+            </div>
+
+            <div class="selector-visual">
+                <div class="selector-example">
+                    <div class="selector-code">
+                        <span class="selector">p</span> <span class="punctuation">{</span><br>
+                        &nbsp;&nbsp;<span class="property">color</span>: <span class="css-color-val">blue</span>;<br>
+                        <span class="punctuation">}</span>
+                    </div>
+                    <div class="selector-preview">
+                        <div class="highlighted"> paragraph 1 (أزرق)</div>
+                        <div class="highlighted"> paragraph 2 (أزرق)</div>
+                        <div class="highlighted"> paragraph 3 (أزرق)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — Element Selector</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="comment">/* كل h1 في الصفحة */</span>
+<span class="selector">h1</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#4A7C59</span><span class="punctuation">;</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">32</span><span class="css-unit">px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* كل p في الصفحة */</span>
+<span class="selector">p</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#4A3728</span><span class="punctuation">;</span>
+    <span class="property">line-height</span><span class="punctuation">:</span> <span class="css-number">1.8</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <!-- Class Selector -->
+            <div class="card">
+                <h3>🔹 2. Class Selector — اختيار الفئة</h3>
+                <p>بتختار العناصر اللي عندها <strong>class معين</strong>. بتستخدم <code class="inline">.</code> (نقطة) قبل اسم الـ class.</p>
+                <p><strong>مهم:</strong> ممكن تستخدم نفس الـ class في <strong>عناصر كتيرة</strong>.</p>
+            </div>
+
+            <div class="selector-visual">
+                <div class="selector-example">
+                    <div class="selector-code">
+                        <span class="selector">.highlight</span> <span class="punctuation">{</span><br>
+                        &nbsp;&nbsp;<span class="property">background</span>: <span class="css-color-val">yellow</span>;<br>
+                        <span class="punctuation">}</span>
+                    </div>
+                    <div class="selector-preview">
+                        <div class="normal"> paragraph عادي</div>
+                        <div class="highlighted"> paragraph مميز (أصفر)</div>
+                        <div class="normal"> paragraph عادي</div>
+                        <div class="highlighted"> paragraph مميز (أصفر)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">HTML + CSS — Class Selector</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="comment">/* CSS */</span>
+<span class="selector">.highlight</span> <span class="punctuation">{</span>
+    <span class="property">background-color</span><span class="punctuation">:</span> <span class="css-color-val">yellow</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="css-number">5</span><span class="css-unit">px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.error</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">red</span><span class="punctuation">;</span>
+    <span class="property">font-weight</span><span class="punctuation">:</span> <span class="css-value">bold</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">HTML — استخدام Class</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="tag">&lt;p&gt;</span><span class="text">فقرة عادية</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"highlight"</span><span class="tag">&gt;</span><span class="text">فقرة مميزة</span><span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"error"</span><span class="tag">&gt;</span><span class="text">رسالة خطأ</span><span class="tag">&lt;/p&gt;</span>
+
+<span class="comment">&lt;!-- ممكن نستخدم أكتر من class --&gt;</span>
+<span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"highlight error"</span><span class="tag">&gt;</span><span class="text">مميز وخطأ</span><span class="tag">&lt;/p&gt;</span></code></pre>
+            </div>
+
+            <!-- ID Selector -->
+            <div class="card">
+                <h3>🔹 3. ID Selector — اختيار المعرّف</h3>
+                <p>بتختار عنصر <strong>واحد محدد</strong> بـ ID. بتستخدم <code class="inline">#</code> قبل اسم الـ ID.</p>
+                <p><strong>مهم:</strong> الـ ID لازم يكون <strong>فريد</strong> — مرة واحدة بس في الصفحة.</p>
+            </div>
+
+            <div class="selector-visual">
+                <div class="selector-example">
+                    <div class="selector-code">
+                        <span class="selector">#main-title</span> <span class="punctuation">{</span><br>
+                        &nbsp;&nbsp;<span class="property">color</span>: <span class="css-color-val">green</span>;<br>
+                        <span class="punctuation">}</span>
+                    </div>
+                    <div class="selector-preview">
+                        <div class="highlighted"> العنوان الرئيسي (أخضر)</div>
+                        <div class="normal"> عنوان تاني عادي</div>
+                        <div class="normal"> عنوان تالت عادي</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">HTML + CSS — ID Selector</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="comment">/* CSS */</span>
+<span class="selector">#main-title</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#4A7C59</span><span class="punctuation">;</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">48</span><span class="css-unit">px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* HTML */</span>
+<span class="tag">&lt;h1</span> <span class="attr">id</span>=<span class="value">"main-title"</span><span class="tag">&gt;</span><span class="text">العنوان الرئيسي</span><span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;h2&gt;</span><span class="text">عنوان تاني</span><span class="tag">&lt;/h2&gt;</span></code></pre>
+            </div>
+
+            <div class="danger-box">
+                <h4>🚨 Class vs ID — الفرق المهم</h4>
+                <p><strong>Class:</strong> ممكن يتكرر في أكتر من عنصر (زي "طالب" في فصل — كتير).</p>
+                <p><strong>ID:</strong> فريد — عنصر واحد بس (زي "رقم القومي" — واحد بس).</p>
+                <p style="margin-top: 10px;"><strong>القاعدة:</strong> استخدم Class في 90% من الحالات. استخدم ID بس لو فعلاً محتاج عنصر واحد محدد.</p>
+            </div>
+
+            <!-- Universal Selector -->
+            <div class="card">
+                <h3>🔹 4. Universal Selector — الاختيار الشامل</h3>
+                <p>بيختار <strong>كل العناصر</strong> في الصفحة. بيستخدم <code class="inline">*</code></p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — Universal Selector</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="comment">/* تطبيق على كل العناصر */</span>
+<span class="selector">*</span> <span class="punctuation">{</span>
+    <span class="property">margin</span><span class="punctuation">:</span> <span class="css-number">0</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="css-number">0</span><span class="punctuation">;</span>
+    <span class="property">box-sizing</span><span class="punctuation">:</span> <span class="css-value">border-box</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <!-- Grouping Selector -->
+            <div class="card">
+                <h3>🔹 5. Grouping Selector — اختيار المجموعة</h3>
+                <p>بتطبق نفس التصميم على <strong>أكتر من selector</strong> باستخدام الفاصلة <code class="inline">,</code></p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — Grouping Selector</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="comment">/* نفس التنسيق لـ h1, h2, h3 */</span>
+<span class="selector">h1, h2, h3</span> <span class="punctuation">{</span>
+    <span class="property">font-family</span><span class="punctuation">:</span> <span class="css-value">'Cairo', sans-serif</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#4A7C59</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* نفس التنسيق لـ class مختلفة */</span>
+<span class="selector">.btn, .button, .link-btn</span> <span class="punctuation">{</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="css-number">10</span><span class="css-unit">px</span> <span class="css-number">20</span><span class="css-unit">px</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="css-number">8</span><span class="css-unit">px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <!-- Descendant Selector -->
+            <div class="card">
+                <h3>🔹 6. Descendant Selector — اختيار الأحفاد</h3>
+                <p>بتختار عنصر <strong>جوه عنصر تاني</strong>. باستخدام المسافة.</p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — Descendant Selector</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="comment">/* كل p جوا article */</span>
+<span class="selector">article p</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#4A3728</span><span class="punctuation">;</span>
+    <span class="property">line-height</span><span class="punctuation">:</span> <span class="css-number">1.8</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* كل a جوا nav */</span>
+<span class="selector">nav a</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">white</span><span class="punctuation">;</span>
+    <span class="property">text-decoration</span><span class="punctuation">:</span> <span class="css-value">none</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">HTML — مثال</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="tag">&lt;article&gt;</span>
+    <span class="tag">&lt;p&gt;</span><span class="text">ده هيأثر عليه (جوا article)</span><span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;div&gt;</span>
+        <span class="tag">&lt;p&gt;</span><span class="text">ده كمان (جوا article جوا div)</span><span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/article&gt;</span>
+
+<span class="tag">&lt;p&gt;</span><span class="text">ده مش هيأثر عليه (مش جوا article)</span><span class="tag">&lt;/p&gt;</span></code></pre>
+            </div>
+
+            <!-- Selectors Summary -->
+            <div class="card">
+                <h3>📊 ملخص الـ Selectors</h3>
+                <table class="element-table">
+                    <thead>
+                        <tr>
+                            <th>Selector</th>
+                            <th>الصيغة</th>
+                            <th>مثال</th>
+                            <th>الاستخدام</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Element</strong></td>
+                            <td><code>tag</code></td>
+                            <td><code>p { }</code></td>
+                            <td>كل عناصر من نوع معين</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Class</strong></td>
+                            <td><code>.name</code></td>
+                            <td><code>.btn { }</code></td>
+                            <td>عناصر ليها نفس الـ class</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ID</strong></td>
+                            <td><code>#name</code></td>
+                            <td><code>#header { }</code></td>
+                            <td>عنصر واحد فريد</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Universal</strong></td>
+                            <td><code>*</code></td>
+                            <td><code>* { }</code></td>
+                            <td>كل العناصر</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Grouping</strong></td>
+                            <td><code>A, B</code></td>
+                            <td><code>h1, h2 { }</code></td>
+                            <td>أكتر من selector</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Descendant</strong></td>
+                            <td><code>A B</code></td>
+                            <td><code>nav a { }</code></td>
+                            <td>B جوا A</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ========== Specificity ========== -->
+        <section>
+            <h2 class="section-title">
+                <div class="title-icon">⚖️</div>
+                <span>Specificity — الأولوية</span>
+            </h2>
+
+            <div class="card">
+                <h3>📖 ما هي Specificity؟</h3>
+                <p>لما يكون عندك <strong>أكتر من قاعدة CSS</strong> بتأثر على نفس العنصر، مين اللي بياخد الأولوية؟ هنا بييجي دور <strong>Specificity</strong>.</p>
+            </div>
+
+            <div class="analogy-box">
+                <h3>💡 تشبيه من الحياة</h3>
+                <p>تخيل إن أب وأم وجد بيأمروا طفل بحاجات مختلفة. مين اللي الطفل هيسمع؟</p>
+                <ul class="analogy-list">
+                    <li><strong>Inline CSS</strong> = الأب (الأقوى — 1000)</li>
+                    <li><strong>ID</strong> = الأم (قوي — 100)</li>
+                    <li><strong>Class</strong> = الجد (متوسط — 10)</li>
+                    <li><strong>Element</strong> = صديق (ضعيف — 1)</li>
+                </ul>
+            </div>
+
+            <div class="specificity-visual">
+                <h4 style="color: var(--primary-dark); margin-bottom: 20px; text-align: center;">⚖️ جدول Specificity</h4>
+                
+                <div class="specificity-row">
+                    <div class="selector-name">!important</div>
+                    <div class="specificity-score">
+                        <div class="score-box active">∞</div>
+                    </div>
+                    <div class="specificity-label">الأعلى — تجنبه</div>
+                </div>
+                
+                <div class="specificity-row">
+                    <div class="selector-name">style="..." (Inline)</div>
+                    <div class="specificity-score">
+                        <div class="score-box">1</div>
+                        <div class="score-box">0</div>
+                        <div class="score-box">0</div>
+                        <div class="score-box">0</div>
+                    </div>
+                    <div class="specificity-label">1000</div>
+                </div>
+                
+                <div class="specificity-row">
+                    <div class="selector-name">#id</div>
+                    <div class="specificity-score">
+                        <div class="score-box">0</div>
+                        <div class="score-box active">1</div>
+                        <div class="score-box">0</div>
+                        <div class="score-box">0</div>
+                    </div>
+                    <div class="specificity-label">100</div>
+                </div>
+                
+                <div class="specificity-row">
+                    <div class="selector-name">.class, :pseudo</div>
+                    <div class="specificity-score">
+                        <div class="score-box">0</div>
+                        <div class="score-box">0</div>
+                        <div class="score-box active">1</div>
+                        <div class="score-box">0</div>
+                    </div>
+                    <div class="specificity-label">10</div>
+                </div>
+                
+                <div class="specificity-row">
+                    <div class="selector-name">element, ::pseudo</div>
+                    <div class="specificity-score">
+                        <div class="score-box">0</div>
+                        <div class="score-box">0</div>
+                        <div class="score-box">0</div>
+                        <div class="score-box active">1</div>
+                    </div>
+                    <div class="specificity-label">1</div>
+                </div>
+                
+                <div class="specificity-row">
+                    <div class="selector-name">*</div>
+                    <div class="specificity-score">
+                        <div class="score-box">0</div>
+                        <div class="score-box">0</div>
+                        <div class="score-box">0</div>
+                        <div class="score-box">0</div>
+                    </div>
+                    <div class="specificity-label">0</div>
+                </div>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — مثال Specificity</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="comment">/* Specificity: 0-0-0-1 */</span>
+<span class="selector">p</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">blue</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Specificity: 0-0-1-0 */</span>
+<span class="selector">.text</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">green</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Specificity: 0-1-0-0 */</span>
+<span class="selector">#main</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">red</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* لو العنصر: &lt;p id="main" class="text"&gt; */</span>
+<span class="comment">/* اللون هيكون RED — لأن ID أعلى specificity */</span></code></pre>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ نصيحة مهمة</h4>
+                <p>متستخدمش <code class="inline">!important</code> إلا في حالات نادرة جداً. لو محتاجه، ده غالباً معناه إن في مشكلة في تنظيم الـ CSS بتاعك.</p>
+            </div>
+        </section>
+
+        <!-- ========== Colors ========== -->
+        <section>
+            <h2 class="section-title">
+                <div class="title-icon">🎨</div>
+                <span>Colors — الألوان في CSS</span>
+            </h2>
+
+            <div class="card">
+                <h3>📖 طرق تعريف الألوان</h3>
+                <p>في CSS عندنا <strong>5 طرق</strong> لتحديد الألوان. كل طريقة ليها استخداماتها.</p>
+            </div>
+
+            <!-- Named Colors -->
+            <div class="card">
+                <h3>🔹 1. Named Colors — الألوان المسماة</h3>
+                <p>CSS عندها <strong>140+ لون</strong> بأسماء جاهزة. سهلة لكن محدودة.</p>
+            </div>
+
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="swatch-preview" style="background: red; color: white;">red</div>
+                    <div class="swatch-info">
+                        <div class="swatch-name">أحمر</div>
+                        <div class="swatch-code">red</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="swatch-preview" style="background: blue; color: white;">blue</div>
+                    <div class="swatch-info">
+                        <div class="swatch-name">أزرق</div>
+                        <div class="swatch-code">blue</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="swatch-preview" style="background: green; color: white;">green</div>
+                    <div class="swatch-info">
+                        <div class="swatch-name">أخضر</div>
+                        <div class="swatch-code">green</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="swatch-preview" style="background: orange; color: white;">orange</div>
+                    <div class="swatch-info">
+                        <div class="swatch-name">برتقالي</div>
+                        <div class="swatch-code">orange</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — Named Colors</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="selector">h1</span> <span class="punctuation">{</span> <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">red</span><span class="punctuation">;</span> <span class="punctuation">}</span>
+<span class="selector">p</span> <span class="punctuation">{</span> <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">blue</span><span class="punctuation">;</span> <span class="punctuation">}</span>
+<span class="selector">.btn</span> <span class="punctuation">{</span> <span class="property">background</span><span class="punctuation">:</span> <span class="css-color-val">green</span><span class="punctuation">;</span> <span class="punctuation">}</span></code></pre>
+            </div>
+
+            <!-- HEX -->
+            <div class="card">
+                <h3>🔹 2. HEX Colors — الألوان السداسية</h3>
+                <p>الأكثر استخداماً. بتتكون من <strong>#</strong> + 6 أرقام/حروف (0-9, A-F).</p>
+                <p>كل رقمين = لون (Red, Green, Blue).</p>
+            </div>
+
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="swatch-preview" style="background: #FF0000; color: white;">#FF0000</div>
+                    <div class="swatch-info">
+                        <div class="swatch-name">أحمر نقي</div>
+                        <div class="swatch-code">#FF0000</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="swatch-preview" style="background: #4A7C59; color: white;">#4A7C59</div>
+                    <div class="swatch-info">
+                        <div class="swatch-name">أخضر غابي</div>
+                        <div class="swatch-code">#4A7C59</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="swatch-preview" style="background: #D4A574; color: white;">#D4A574</div>
+                    <div class="swatch-info">
+                        <div class="swatch-name">بيج ذهبي</div>
+                        <div class="swatch-code">#D4A574</div>
+                    </div>
+                </div>
+                <div class="color-swatch">
+                    <div class="swatch-preview" style="background: #2C1810; color: white;">#2C1810</div>
+                    <div class="swatch-info">
+                        <div class="swatch-name">بني داكن</div>
+                        <div class="swatch-code">#2C1810</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — HEX Colors</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="selector">h1</span> <span class="punctuation">{</span> <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#4A7C59</span><span class="punctuation">;</span> <span class="punctuation">}</span>
+<span class="selector">.btn</span> <span class="punctuation">{</span> <span class="property">background</span><span class="punctuation">:</span> <span class="css-color-val">#D4A574</span><span class="punctuation">;</span> <span class="punctuation">}</span>
+
+<span class="comment">/* اختصار: لو الرقمين متشابهين */</span>
+<span class="selector">p</span> <span class="punctuation">{</span> <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#333</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* = #333333 */</span>
+<span class="selector">div</span> <span class="punctuation">{</span> <span class="property">background</span><span class="punctuation">:</span> <span class="css-color-val">#FFF</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* = #FFFFFF */</span></code></pre>
+            </div>
+
+            <!-- RGB -->
+            <div class="card">
+                <h3>🔹 3. RGB Colors — الأحمر والأخضر والأزرق</h3>
+                <p>كل لون من 0 لـ 255. <code class="inline">rgb(red, green, blue)</code></p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — RGB</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="selector">h1</span> <span class="punctuation">{</span> <span class="property">color</span><span class="punctuation">:</span> <span class="css-value">rgb(74, 124, 89)</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* أخضر غابي */</span>
+<span class="selector">p</span> <span class="punctuation">{</span> <span class="property">color</span><span class="punctuation">:</span> <span class="css-value">rgb(255, 0, 0)</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* أحمر */</span>
+<span class="selector">div</span> <span class="punctuation">{</span> <span class="property">background</span><span class="punctuation">:</span> <span class="css-value">rgb(0, 0, 0)</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* أسود */</span></code></pre>
+            </div>
+
+            <!-- RGBA -->
+            <div class="card">
+                <h3>🔹 4. RGBA — RGB مع الشفافية</h3>
+                <p>نفس RGB + قيمة <strong>Alpha</strong> (شفافية) من 0 لـ 1.</p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — RGBA</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="selector">.overlay</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="css-value">rgba(0, 0, 0, 0.5)</span><span class="punctuation">;</span> <span class="comment">/* أسود شفاف 50% */</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.card</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="css-value">rgba(74, 124, 89, 0.1)</span><span class="punctuation">;</span> <span class="comment">/* أخضر شفاف جداً */</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <!-- HSL -->
+            <div class="card">
+                <h3>🔹 5. HSL — Hue, Saturation, Lightness</h3>
+                <p>أسهل طريقة للفهم البشري:</p>
+                <p>• <strong>Hue</strong> (0-360): اللون على دائرة الألوان</p>
+                <p>• <strong>Saturation</strong> (0%-100%): قوة اللون</p>
+                <p>• <strong>Lightness</strong> (0%-100%): إضاءة اللون</p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — HSL</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="selector">h1</span> <span class="punctuation">{</span> <span class="property">color</span><span class="punctuation">:</span> <span class="css-value">hsl(140, 25%, 39%)</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* أخضر غابي */</span>
+<span class="selector">p</span> <span class="punctuation">{</span> <span class="property">color</span><span class="punctuation">:</span> <span class="css-value">hsl(0, 100%, 50%)</span><span class="punctuation">;</span> <span class="punctuation">}</span> <span class="comment">/* أحمر */</span>
+
+<span class="comment">/* HSLA — مع شفافية */</span>
+<span class="selector">.overlay</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="css-value">hsla(0, 0%, 0%, 0.5)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ أي طريقة أستخدم؟</h4>
+                <p>• <strong>HEX:</strong> الأكثر شيوعاً — استخدمه في 80% من الحالات.</p>
+                <p>• <strong>RGBA:</strong> لما تحتاج شفافية.</p>
+                <p>• <strong>HSL:</strong> لما تحتاج تعدل على اللون بسهولة (تفتحه، تغلقه).</p>
+            </div>
+        </section>
+
+        <!-- ========== Backgrounds ========== -->
+        <section>
+            <h2 class="section-title">
+                <div class="title-icon">🖼️</div>
+                <span>Backgrounds — الخلفيات</span>
+            </h2>
+
+            <div class="card">
+                <h3>📖 خصائص الخلفية</h3>
+                <p>في CSS عندنا <strong>5 خصائص أساسية</strong> للخلفية:</p>
+            </div>
+
+            <div class="tag-grid">
+                <div class="tag-card">
+                    <span class="tag-name">background-color</span>
+                    <h5>لون الخلفية</h5>
+                    <p>لون الخلفية للعنصر</p>
+                </div>
+                <div class="tag-card">
+                    <span class="tag-name">background-image</span>
+                    <h5>صورة الخلفية</h5>
+                    <p>صورة كخلفية للعنصر</p>
+                </div>
+                <div class="tag-card">
+                    <span class="tag-name">background-size</span>
+                    <h5>حجم الخلفية</h5>
+                    <p>cover, contain, أو مقاس محدد</p>
+                </div>
+                <div class="tag-card">
+                    <span class="tag-name">background-position</span>
+                    <h5>موضع الخلفية</h5>
+                    <p>center, top, left, أو إحداثيات</p>
+                </div>
+                <div class="tag-card">
+                    <span class="tag-name">background-repeat</span>
+                    <h5>تكرار الخلفية</h5>
+                    <p>repeat, no-repeat, repeat-x, repeat-y</p>
+                </div>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — Backgrounds</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="comment">/* لون خلفية */</span>
+<span class="selector">.card</span> <span class="punctuation">{</span>
+    <span class="property">background-color</span><span class="punctuation">:</span> <span class="css-color-val">#F5EFE6</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* صورة خلفية */</span>
+<span class="selector">.hero</span> <span class="punctuation">{</span>
+    <span class="property">background-image</span><span class="punctuation">:</span> <span class="css-value">url('images/hero.jpg')</span><span class="punctuation">;</span>
+    <span class="property">background-size</span><span class="punctuation">:</span> <span class="css-value">cover</span><span class="punctuation">;</span>
+    <span class="property">background-position</span><span class="punctuation">:</span> <span class="css-value">center</span><span class="punctuation">;</span>
+    <span class="property">background-repeat</span><span class="punctuation">:</span> <span class="css-value">no-repeat</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Shorthand — كلهم في سطر */</span>
+<span class="selector">.banner</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="css-color-val">#4A7C59</span> <span class="css-value">url('bg.jpg')</span> <span class="css-value">center/cover no-repeat</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <div class="live-demo">
+                <h4>🎨 أمثلة حية للخلفيات:</h4>
+                
+                <div class="demo-box" style="background-color: #FFE5B4;">
+                    خلفية بلون واحد (background-color)
+                </div>
+
+                <div class="demo-colored">
+                    خلفية بلون + border
+                </div>
+
+                <div class="demo-gradient">
+                    خلفية بتدرج (gradient) — هنشوفها في المحاضرة 12
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🔹 background-size — القيم المهمة</h3>
+                <table class="element-table">
+                    <thead>
+                        <tr>
+                            <th>القيمة</th>
+                            <th>المعنى</th>
+                            <th>الاستخدام</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>cover</code></td>
+                            <td>الصورة تغطي العنصر كله</td>
+                            <td>Hero sections, backgrounds</td>
+                        </tr>
+                        <tr>
+                            <td><code>contain</code></td>
+                            <td>الصورة كاملة جوه العنصر</td>
+                            <td>Logos, icons</td>
+                        </tr>
+                        <tr>
+                            <td><code>100% 100%</code></td>
+                            <td>تمدد الصورة على كل الحجم</td>
+                            <td>تشويه محتمل</td>
+                        </tr>
+                        <tr>
+                            <td><code>auto</code></td>
+                            <td>الحجم الطبيعي للصورة</td>
+                            <td>الافتراضي</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ========== Units ========== -->
+        <section>
+            <h2 class="section-title">
+                <div class="title-icon">📏</div>
+                <span>Units — وحدات القياس</span>
+            </h2>
+
+            <div class="card">
+                <h3>📖 ليه الوحدات مهمة؟</h3>
+                <p>في CSS، أي رقم لازم يكون معاه <strong>وحدة قياس</strong>. اختيار الوحدة الصح بيأثر على:</p>
+                <p>• التجاوب (Responsive)</p>
+                <p>• سهولة الصيانة</p>
+                <p>• تجربة المستخدم</p>
+            </div>
+
+            <div class="units-grid">
+                <div class="unit-card">
+                    <div class="unit-symbol">px</div>
+                    <div class="unit-name">Pixels</div>
+                    <div class="unit-desc">وحدة ثابتة — مقاس محدد</div>
+                </div>
+                <div class="unit-card">
+                    <div class="unit-symbol">%</div>
+                    <div class="unit-name">Percentage</div>
+                    <div class="unit-desc">نسبة من العنصر الأب</div>
+                </div>
+                <div class="unit-card">
+                    <div class="unit-symbol">em</div>
+                    <div class="unit-name">Em</div>
+                    <div class="unit-desc">نسبة من حجم خط العنصر الأب</div>
+                </div>
+                <div class="unit-card">
+                    <div class="unit-symbol">rem</div>
+                    <div class="unit-name">Root Em</div>
+                    <div class="unit-desc">نسبة من حجم خط الـ root (html)</div>
+                </div>
+                <div class="unit-card">
+                    <div class="unit-symbol">vw</div>
+                    <div class="unit-name">Viewport Width</div>
+                    <div class="unit-desc">1% من عرض الشاشة</div>
+                </div>
+                <div class="unit-card">
+                    <div class="unit-symbol">vh</div>
+                    <div class="unit-name">Viewport Height</div>
+                    <div class="unit-desc">1% من ارتفاع الشاشة</div>
+                </div>
+            </div>
+
+            <!-- Pixels -->
+            <div class="card">
+                <h3>🔹 1. Pixels (px) — الوحدة الثابتة</h3>
+                <p>أبسط وحدة. <code class="inline">16px</code> = 16 بكسل على الشاشة.</p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — Pixels</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="selector">h1</span> <span class="punctuation">{</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">32</span><span class="css-unit">px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.box</span> <span class="punctuation">{</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="css-number">300</span><span class="css-unit">px</span><span class="punctuation">;</span>
+    <span class="property">height</span><span class="punctuation">:</span> <span class="css-number">200</span><span class="css-unit">px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ مشكلة px</h4>
+                <p>px <strong>مش متجاوب</strong>. لو المستخدم غيّر حجم الخط في المتصفح، px مش هيتأثر. كمان على الشاشات المختلفة، نفس الـ px ممكن يظهر بأحجام مختلفة.</p>
+            </div>
+
+            <!-- Percentage -->
+            <div class="card">
+                <h3>🔹 2. Percentage (%) — النسبة المئوية</h3>
+                <p>بتحسب <strong>نسبة من العنصر الأب</strong>.</p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — Percentage</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="selector">.container</span> <span class="punctuation">{</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="css-number">100</span><span class="css-unit">%</span><span class="punctuation">;</span> <span class="comment">/* عرض الأب كامل */</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.half</span> <span class="punctuation">{</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="css-number">50</span><span class="css-unit">%</span><span class="punctuation">;</span> <span class="comment">/* نص عرض الأب */</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <!-- em -->
+            <div class="card">
+                <h3>🔹 3. em — نسبة من الأب</h3>
+                <p><code class="inline">1em</code> = حجم خط العنصر الأب.</p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — em</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="selector">body</span> <span class="punctuation">{</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">16</span><span class="css-unit">px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">p</span> <span class="punctuation">{</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">1.5</span><span class="css-unit">em</span><span class="punctuation">;</span> <span class="comment">/* 1.5 × 16 = 24px */</span>
+    <span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="css-number">1</span><span class="css-unit">em</span><span class="punctuation">;</span> <span class="comment">/* 24px (حسب حجم الخط الحالي) */</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <!-- rem -->
+            <div class="card">
+                <h3>🔹 4. rem — نسبة من الـ Root</h3>
+                <p><code class="inline">1rem</code> = حجم خط عنصر <code class="inline">&lt;html&gt;</code> (عادة 16px).</p>
+                <p><strong>rem أفضل من em</strong> لأنه ثابت ومش بيتأثر بالعنصر الأب.</p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — rem</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="selector">html</span> <span class="punctuation">{</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">16</span><span class="css-unit">px</span><span class="punctuation">;</span> <span class="comment">/* 1rem = 16px */</span>
+<span class="punctuation">}</span>
+
+<span class="selector">h1</span> <span class="punctuation">{</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">2</span><span class="css-unit">rem</span><span class="punctuation">;</span> <span class="comment">/* 32px */</span>
+<span class="punctuation">}</span>
+
+<span class="selector">p</span> <span class="punctuation">{</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">1</span><span class="css-unit">rem</span><span class="punctuation">;</span> <span class="comment">/* 16px */</span>
+    <span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="css-number">1.5</span><span class="css-unit">rem</span><span class="punctuation">;</span> <span class="comment">/* 24px */</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <div class="success-box">
+                <h4>✅ ليه rem أفضل؟</h4>
+                <p>• <strong>ثابت:</strong> 1rem = 16px في كل مكان.</p>
+                <p>• <strong>متجاوب:</strong> لو المستخدم غيّر حجم الخط في المتصفح، rem بيتأثر.</p>
+                <p>• <strong>سهل الحساب:</strong> 2rem = 32px دايماً.</p>
+            </div>
+
+            <!-- vw & vh -->
+            <div class="card">
+                <h3>🔹 5. vw & vh — نسبة من الشاشة</h3>
+                <p><code class="inline">1vw</code> = 1% من عرض الشاشة. <code class="inline">1vh</code> = 1% من ارتفاع الشاشة.</p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">CSS — vw & vh</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="selector">.hero</span> <span class="punctuation">{</span>
+    <span class="property">height</span><span class="punctuation">:</span> <span class="css-number">100</span><span class="css-unit">vh</span><span class="punctuation">;</span> <span class="comment">/* ارتفاع الشاشة كامل */</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="css-number">100</span><span class="css-unit">vw</span><span class="punctuation">;</span> <span class="comment">/* عرض الشاشة كامل */</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.title</span> <span class="punctuation">{</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">5</span><span class="css-unit">vw</span><span class="punctuation">;</span> <span class="comment">/* حجم الخط 5% من عرض الشاشة */</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+
+            <!-- Units Summary -->
+            <div class="card">
+                <h3>📊 متى نستخدم كل وحدة؟</h3>
+                <table class="element-table">
+                    <thead>
+                        <tr>
+                            <th>الوحدة</th>
+                            <th>نوع</th>
+                            <th>الاستخدام</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>px</code></td>
+                            <td>ثابت</td>
+                            <td>Borders, shadows, تفاصيل صغيرة</td>
+                        </tr>
+                        <tr>
+                            <td><code>%</code></td>
+                            <td>نسبي</td>
+                            <td>Widths, Layouts</td>
+                        </tr>
+                        <tr>
+                            <td><code>em</code></td>
+                            <td>نسبي من الأب</td>
+                            <td>Padding, Margin جوه عنصر</td>
+                        </tr>
+                        <tr>
+                            <td><code>rem</code></td>
+                            <td>نسبي من root</td>
+                            <td>Font sizes, Spacings ⭐</td>
+                        </tr>
+                        <tr>
+                            <td><code>vw</code></td>
+                            <td>نسبي من الشاشة</td>
+                            <td>Responsive typography</td>
+                        </tr>
+                        <tr>
+                            <td><code>vh</code></td>
+                            <td>نسبي من الشاشة</td>
+                            <td>Full-height sections</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ========== Debugging Activity ========== -->
+        <section>
+            <h2 class="section-title">
+                <div class="title-icon">🐛</div>
+                <span>Debugging — اكتشف الأخطاء</span>
+            </h2>
+
+            <div class="debug-box">
+                <h3>🔍 نشاط: اكتشف الأخطاء في CSS ده</h3>
+                <p style="color: #5C2828;">الكود ده فيه <strong>5 أخطاء شائعة</strong>. حاول تلاقيهم.</p>
+
+                <div class="code-wrapper">
+                    <div class="code-header">
+                        <span class="code-lang">CSS — كود فيه أخطاء ❌</span>
+                        <div class="code-dots"><span></span><span></span><span></span></div>
+                    </div>
+<pre><code><span class="selector">h1</span> <span class="punctuation">{</span>
+    <span class="property">color</span> <span class="css-color-val">#4A7C59</span>
+    <span class="property">font-size:</span> <span class="css-number">32</span>
+<span class="punctuation">}</span>
+
+<span class="selector">.button</span> <span class="punctuation">{</span>
+    <span class="property">background:</span> <span class="css-color-val">#D4A574</span><span class="punctuation">;</span>
+    <span class="property">padding:</span> <span class="css-number">10</span> <span class="css-number">20</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="selector">#main</span> <span class="punctuation">{</span>
+    <span class="property">width:</span> <span class="css-number">100</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+                </div>
+
+                <div class="debug-comparison">
+                    <div class="debug-wrong">
+                        <div class="debug-label">❌ الأخطاء</div>
+                        <pre><code style="font-size: 0.85rem;">1. color ناقص :
+2. color ناقص ;
+3. font-size ناقص وحدة (px)
+4. padding ناقص وحدة
+5. width ناقص وحدة (%)</code></pre>
+                    </div>
+                    <div class="debug-right">
+                        <div class="debug-label">✅ الكود الصحيح</div>
+                        <pre><code style="font-size: 0.85rem;"><span class="selector">h1</span> <span class="punctuation">{</span>
+  <span class="property">color</span>: <span class="css-color-val">#4A7C59</span>;
+  <span class="property">font-size</span>: <span class="css-number">32</span><span class="css-unit">px</span>;
+<span class="punctuation">}</span>
+
+<span class="selector">.button</span> <span class="punctuation">{</span>
+  <span class="property">background</span>: <span class="css-color-val">#D4A574</span>;
+  <span class="property">padding</span>: <span class="css-number">10</span><span class="css-unit">px</span> <span class="css-number">20</span><span class="css-unit">px</span>;
+<span class="punctuation">}</span>
+
+<span class="selector">#main</span> <span class="punctuation">{</span>
+  <span class="property">width</span>: <span class="css-number">100</span><span class="css-unit">%</span>;
+<span class="punctuation">}</span></code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== Mini Project ========== -->
+        <section>
+            <h2 class="section-title">
+                <div class="title-icon">🎨</div>
+                <span>مشروع المحاضرة: Styled Profile Card</span>
+            </h2>
+
+            <div class="card">
+                <h3>📋 المطلوب</h3>
+                <p>ابني <strong>بطاقة تعريف شخصية</strong> مع CSS يحتوي على:</p>
+                <ul style="list-style: none; padding-right: 0; margin-top: 15px;">
+                    <li style="padding: 8px 0; padding-right: 25px; position: relative; color: var(--text-body);"><span style="position: absolute; right: 0; color: var(--success); font-weight: 900;">✓</span> ملف CSS خارجي (style.css)</li>
+                    <li style="padding: 8px 0; padding-right: 25px; position: relative; color: var(--text-body);"><span style="position: absolute; right: 0; color: var(--success); font-weight: 900;">✓</span> استخدام Class selectors على الأقل 5 classes</li>
+                    <li style="padding: 8px 0; padding-right: 25px; position: relative; color: var(--text-body);"><span style="position: absolute; right: 0; color: var(--success); font-weight: 900;">✓</span> استخدام ID selector مرة واحدة</li>
+                    <li style="padding: 8px 0; padding-right: 25px; position: relative; color: var(--text-body);"><span style="position: absolute; right: 0; color: var(--success); font-weight: 900;">✓</span> استخدام HEX + RGBA + HSL في الألوان</li>
+                    <li style="padding: 8px 0; padding-right: 25px; position: relative; color: var(--text-body);"><span style="position: absolute; right: 0; color: var(--success); font-weight: 900;">✓</span> خلفية بلون + صورة (background)</li>
+                    <li style="padding: 8px 0; padding-right: 25px; position: relative; color: var(--text-body);"><span style="position: absolute; right: 0; color: var(--success); font-weight: 900;">✓</span> استخدام rem + px + % في الوحدات</li>
+                    <li style="padding: 8px 0; padding-right: 25px; position: relative; color: var(--text-body);"><span style="position: absolute; right: 0; color: var(--success); font-weight: 900;">✓</span> Grouping selector على الأقل مرة</li>
+                    <li style="padding: 8px 0; padding-right: 25px; position: relative; color: var(--text-body);"><span style="position: absolute; right: 0; color: var(--success); font-weight: 900;">✓</span> Descendant selector على الأقل مرة</li>
+                </ul>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">index.html</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"ar"</span> <span class="attr">dir</span>=<span class="value">"rtl"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="value">"viewport"</span> <span class="attr">content</span>=<span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span><span class="text">بطاقة تعريف</span><span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="value">"stylesheet"</span> <span class="attr">href</span>=<span class="value">"css/style.css"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"container"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"profile-card"</span> <span class="attr">id</span>=<span class="value">"main-card"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="value">"images/me.jpg"</span> <span class="attr">alt</span>=<span class="value">"صورتي"</span> <span class="attr">class</span>=<span class="value">"profile-img"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;h1</span> <span class="attr">class</span>=<span class="value">"name"</span><span class="tag">&gt;</span><span class="text">أحمد محمد</span><span class="tag">&lt;/h1&gt;</span>
+            <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"title"</span><span class="tag">&gt;</span><span class="text">Frontend Developer</span><span class="tag">&lt;/p&gt;</span>
+            <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="value">"bio"</span><span class="tag">&gt;</span><span class="text">طالب في Sunshine T Academy</span><span class="tag">&lt;/p&gt;</span>
+            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="value">"skills"</span><span class="tag">&gt;</span>
+                <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="value">"skill-tag"</span><span class="tag">&gt;</span><span class="text">HTML</span><span class="tag">&lt;/span&gt;</span>
+                <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="value">"skill-tag"</span><span class="tag">&gt;</span><span class="text">CSS</span><span class="tag">&lt;/span&gt;</span>
+                <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="value">"skill-tag"</span><span class="tag">&gt;</span><span class="text">JavaScript</span><span class="tag">&lt;/span&gt;</span>
+            <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></code></pre>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-lang">css/style.css</span>
+                    <div class="code-dots"><span></span><span></span><span></span></div>
+                </div>
+<pre><code><span class="comment">/* Universal Reset */</span>
+<span class="selector">*</span> <span class="punctuation">{</span>
+    <span class="property">margin</span><span class="punctuation">:</span> <span class="css-number">0</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="css-number">0</span><span class="punctuation">;</span>
+    <span class="property">box-sizing</span><span class="punctuation">:</span> <span class="css-value">border-box</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Body */</span>
+<span class="selector">body</span> <span class="punctuation">{</span>
+    <span class="property">font-family</span><span class="punctuation">:</span> <span class="css-value">'Cairo', sans-serif</span><span class="punctuation">;</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="css-value">linear-gradient(135deg, #D4E5D8 0%, #E8C9A0 100%)</span><span class="punctuation">;</span>
+    <span class="property">min-height</span><span class="punctuation">:</span> <span class="css-number">100</span><span class="css-unit">vh</span><span class="punctuation">;</span>
+    <span class="property">display</span><span class="punctuation">:</span> <span class="css-value">flex</span><span class="punctuation">;</span>
+    <span class="property">align-items</span><span class="punctuation">:</span> <span class="css-value">center</span><span class="punctuation">;</span>
+    <span class="property">justify-content</span><span class="punctuation">:</span> <span class="css-value">center</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="css-number">2</span><span class="css-unit">rem</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Container */</span>
+<span class="selector">.container</span> <span class="punctuation">{</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="css-number">100</span><span class="css-unit">%</span><span class="punctuation">;</span>
+    <span class="property">max-width</span><span class="punctuation">:</span> <span class="css-number">500</span><span class="css-unit">px</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Profile Card */</span>
+<span class="selector">.profile-card</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="css-color-val">#FFFFFF</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="css-number">16</span><span class="css-unit">px</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="css-number">2</span><span class="css-unit">rem</span><span class="punctuation">;</span>
+    <span class="property">text-align</span><span class="punctuation">:</span> <span class="css-value">center</span><span class="punctuation">;</span>
+    <span class="property">box-shadow</span><span class="punctuation">:</span> <span class="css-number">0</span> <span class="css-number">10</span><span class="css-unit">px</span> <span class="css-number">30</span><span class="css-unit">px</span> <span class="css-value">rgba(74, 124, 89, 0.15)</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Profile Image */</span>
+<span class="selector">.profile-img</span> <span class="punctuation">{</span>
+    <span class="property">width</span><span class="punctuation">:</span> <span class="css-number">150</span><span class="css-unit">px</span><span class="punctuation">;</span>
+    <span class="property">height</span><span class="punctuation">:</span> <span class="css-number">150</span><span class="css-unit">px</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="css-number">50</span><span class="css-unit">%</span><span class="punctuation">;</span>
+    <span class="property">border</span><span class="punctuation">:</span> <span class="css-number">4</span><span class="css-unit">px</span> <span class="css-value">solid</span> <span class="css-color-val">#4A7C59</span><span class="punctuation">;</span>
+    <span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="css-number">1</span><span class="css-unit">rem</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Grouping Selector */</span>
+<span class="selector">.name, .title, .bio</span> <span class="punctuation">{</span>
+    <span class="property">margin-bottom</span><span class="punctuation">:</span> <span class="css-number">0.5</span><span class="css-unit">rem</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Name */</span>
+<span class="selector">.name</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-value">hsl(140, 25%, 30%)</span><span class="punctuation">;</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">2</span><span class="css-unit">rem</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Title */</span>
+<span class="selector">.title</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#D4A574</span><span class="punctuation">;</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">1.2</span><span class="css-unit">rem</span><span class="punctuation">;</span>
+    <span class="property">font-weight</span><span class="punctuation">:</span> <span class="css-number">700</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Bio */</span>
+<span class="selector">.bio</span> <span class="punctuation">{</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#4A3728</span><span class="punctuation">;</span>
+    <span class="property">line-height</span><span class="punctuation">:</span> <span class="css-number">1.6</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Skills Container */</span>
+<span class="selector">.skills</span> <span class="punctuation">{</span>
+    <span class="property">margin-top</span><span class="punctuation">:</span> <span class="css-number">1.5</span><span class="css-unit">rem</span><span class="punctuation">;</span>
+    <span class="property">display</span><span class="punctuation">:</span> <span class="css-value">flex</span><span class="punctuation">;</span>
+    <span class="property">gap</span><span class="punctuation">:</span> <span class="css-number">0.5</span><span class="css-unit">rem</span><span class="punctuation">;</span>
+    <span class="property">justify-content</span><span class="punctuation">:</span> <span class="css-value">center</span><span class="punctuation">;</span>
+    <span class="property">flex-wrap</span><span class="punctuation">:</span> <span class="css-value">wrap</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="comment">/* Skill Tag */</span>
+<span class="selector">.skill-tag</span> <span class="punctuation">{</span>
+    <span class="property">background</span><span class="punctuation">:</span> <span class="css-value">rgba(74, 124, 89, 0.1)</span><span class="punctuation">;</span>
+    <span class="property">color</span><span class="punctuation">:</span> <span class="css-color-val">#4A7C59</span><span class="punctuation">;</span>
+    <span class="property">padding</span><span class="punctuation">:</span> <span class="css-number">0.5</span><span class="css-unit">rem</span> <span class="css-number">1</span><span class="css-unit">rem</span><span class="punctuation">;</span>
+    <span class="property">border-radius</span><span class="punctuation">:</span> <span class="css-number">20</span><span class="css-unit">px</span><span class="punctuation">;</span>
+    <span class="property">font-size</span><span class="punctuation">:</span> <span class="css-number">0.9</span><span class="css-unit">rem</span><span class="punctuation">;</span>
+    <span class="property">font-weight</span><span class="punctuation">:</span> <span class="css-number">700</span><span class="punctuation">;</span>
+<span class="punctuation">}</span></code></pre>
+            </div>
+        </section>
+
+        <!-- ========== Summary ========== -->
+        <section>
+            <div class="summary-box">
+                <h3>📌 ملخص المحاضرة</h3>
+                <ul class="summary-list">
+                    <li>CSS = Cascading Style Sheets — للتحكم في التصميم</li>
+                    <li>3 طرق لإضافة CSS: Inline (❌)، Internal (👍)، External (⭐ الأفضل)</li>
+                    <li>قاعدة CSS = Selector + Declaration Block</li>
+                    <li>Selectors: Element, Class (.)، ID (#)، Universal (*)، Grouping (,)، Descendant ( )</li>
+                    <li>Class = يتكرر، ID = فريد</li>
+                    <li>Specificity: Inline (1000) > ID (100) > Class (10) > Element (1)</li>
+                    <li>الألوان: Named, HEX (#RRGGBB)، RGB, RGBA, HSL</li>
+                    <li>Backgrounds: color, image, size, position, repeat</li>
+                    <li>Units: px (ثابت)، % (نسبي)، em (من الأب)، rem (من root) ⭐، vw/vh (من الشاشة)</li>
+                    <li>استخدم External CSS + Class selectors + rem في معظم الحالات</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ========== Next Lecture ========== -->
+        <section>
+            <div class="next-box">
+                <h3>🚀 المحاضرة الجاية</h3>
+                <p>هنكمل رحلة CSS ونتعلم: <strong>Typography + Box Model</strong></p>
+                <p>هنشوف إزاي نتحكم في الخطوط والنصوص، ونفهم أهم مفهوم في CSS: <strong>Box Model</strong> (Content, Padding, Border, Margin).</p>
+                <span class="next-topic">المحاضرة القادمة: Typography + Box Model</span>
+            </div>
+        </section>
+
+        <!-- ========== Quiz Section ========== -->
+        <section class="quiz-section">
+            <div class="quiz-header">
+                <div class="quiz-header-icon">❓</div>
+                <div>
+                    <h2>أسئلة اختيار من متعدد</h2>
+                    <p>10 أسئلة لاختبار فهمك لمحتوى المحاضرة</p>
+                </div>
+            </div>
+
+            <!-- Q1 -->
+            <div class="question">
+                <span class="question-number">سؤال 1</span>
+                <h4>ما معنى CSS؟</h4>
+                <ul class="options">
+                    <li><span class="option-letter">أ</span> Computer Style Sheets</li>
+                    <li><span class="option-letter">ب</span> Cascading Style Sheets</li>
+                    <li><span class="option-letter">ج</span> Creative Style System</li>
+                    <li><span class="option-letter">د</span> Colorful Style Sheets</li>
+                </ul>
+            </div>
+
+            <!-- Q2 -->
+            <div class="question">
+                <span class="question-number">سؤال 2</span>
+                <h4>أي طريقة لإضافة CSS هي الأفضل للمشاريع الحقيقية؟</h4>
+                <ul class="options">
+                    <li><span class="option-letter">أ</span> Inline CSS</li>
+                    <li><span class="option-letter">ب</span> Internal CSS</li>
+                    <li><span class="option-letter">ج</span> External CSS</li>
+                    <li><span class="option-letter">د</span> كلهم بنفس الكفاءة</li>
+                </ul>
+            </div>
+
+            <!-- Q3 -->
+            <div class="question">
+                <span class="question-number">سؤال 3</span>
+                <h4>ما هو الرمز المستخدم لـ Class Selector؟</h4>
+                <ul class="options">
+                    <li><span class="option-letter">أ</span> # (hash)</li>
+                    <li><span class="option-letter">ب</span> . (dot)</li>
+                    <li><span class="option-letter">ج</span> * (star)</li>
+                    <li><span class="option-letter">د</span> @ (at)</li>
+                </ul>
+            </div>
+
+            <!-- Q4 -->
+            <div class="question">
+                <span class="question-number">سؤال 4</span>
+                <h4>ما هو الفرق بين Class و ID؟</h4>
+                <ul class="options">
+                    <li><span class="option-letter">أ</span> مفيش فرق</li>
+                    <li><span class="option-letter">ب</span> Class فريد، ID يتكرر</li>
+                    <li><span class="option-letter">ج</span> Class يتكرر، ID فريد</li>
+                    <li><span class="option-letter">د</span> Class للنصوص، ID للألوان</li>
+                </ul>
+            </div>
+
+            <!-- Q5 -->
+            <div class="question">
+                <span class="question-number">سؤال 5</span>
+                <h4>أي selector عنده أعلى Specificity؟</h4>
+                <ul class="options">
+                    <li><span class="option-letter">أ</span> Element (p)</li>
+                    <li><span class="option-letter">ب</span> Class (.btn)</li>
+                    <li><span class="option-letter">ج</span> ID (#header)</li>
+                    <li><span class="option-letter">د</span> Universal (*)</li>
+                </ul>
+            </div>
+
+            <!-- Q6 -->
+            <div class="question">
+                <span class="question-number">سؤال 6</span>
+                <h4>ما هو الشكل الصحيح لـ HEX Color؟</h4>
+                <ul class="options">
+                    <li><span class="option-letter">أ</span> #GGHHII</li>
+                    <li><span class="option-letter">ب</span> #RRGGBB</li>
+                    <li><span class="option-letter">ج</span> RGB(255, 255, 255)</li>
+                    <li><span class="option-letter">د</span> color: #12345</li>
+                </ul>
+            </div>
+
+            <!-- Q7 -->
+            <div class="question">
+                <span class="question-number">سؤال 7</span>
+                <h4>ما هي وظيفة RGBA؟</h4>
+                <ul class="options">
+                    <li><span class="option-letter">أ</span> إضافة شفافية للون</li>
+                    <li><span class="option-letter">ب</span> تغيير حجم اللون</li>
+                    <li><span class="option-letter">ج</span> إضافة حركة للون</li>
+                    <li><span class="option-letter">د</span> تغيير اتجاه اللون</li>
+                </ul>
+            </div>
+
+            <!-- Q8 -->
+            <div class="question">
+                <span class="question-number">سؤال 8</span>
+                <h4>ما هي قيمة background-size اللي بتخلي الصورة تغطي العنصر كله؟</h4>
+                <ul class="options">
+                    <li><span class="option-letter">أ</span> contain</li>
+                    <li><span class="option-letter">ب</span> cover</li>
+                    <li><span class="option-letter">ج</span> auto</li>
+                    <li><span class="option-letter">د</span> full</li>
+                </ul>
+            </div>
+
+            <!-- Q9 -->
+            <div class="question">
+                <span class="question-number">سؤال 9</span>
+                <h4>ما هي وحدة rem؟</h4>
+                <ul class="options">
+                    <li><span class="option-letter">أ</span> نسبة من حجم خط العنصر الأب</li>
+                    <li><span class="option-letter">ب</span> نسبة من حجم خط عنصر html (root)</li>
+                    <li><span class="option-letter">ج</span> وحدة ثابتة زي px</li>
+                    <li><span class="option-letter">د</span> نسبة من عرض الشاشة</li>
+                </ul>
+            </div>
+
+            <!-- Q10 -->
+            <div class="question">
+                <span class="question-number">سؤال 10</span>
+                <h4>أي وحدة دي بتتأثر بحجم الشاشة؟</h4>
+                <ul class="options">
+                    <li><span class="option-letter">أ</span> px</li>
+                    <li><span class="option-letter">ب</span> rem</li>
+                    <li><span class="option-letter">ج</span> vw</li>
+                    <li><span class="option-letter">د</span> em</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ========== Homework Section ========== -->
+        <section class="homework-section">
+            <div class="homework-header">
+                <div class="homework-header-icon">📝</div>
+                <div>
+                    <h2>واجبات المحاضرة</h2>
+                    <p>5 مسائل تطبيقية متدرجة لتثبيت ما تعلمته</p>
+                </div>
+            </div>
+
+            <!-- HW1 -->
+            <div class="homework-item">
+                <h4>📌 الواجب الأول: تجربة الطرق الثلاثة</h4>
+                <p>ابني صفحة HTML بسيطة وجرب الطرق الثلاثة لـ CSS:</p>
+                <ul>
+                    <li>Inline: غيّر لون h1 واحد بـ style attribute</li>
+                    <li>Internal: حط &lt;style&gt; في head وغيّر لون كل p</li>
+                    <li>External: اعمل ملف style.css وربطه بـ &lt;link&gt;</li>
+                    <li>احذف الطرق اللي مش محتاجها وسيب External بس</li>
+                </ul>
+            </div>
+
+            <!-- HW2 -->
+            <div class="homework-item">
+                <h4>📌 الواجب الثاني: Selectors Practice</h4>
+                <p>ابني صفحة HTML فيها:</p>
+                <ul>
+                    <li>3 عناصر h1, h2, h3 — غيّر لونهم بـ Element Selector</li>
+                    <li>4 فقرات — 2 منهم بـ class "highlight" (خلفية صفراء)</li>
+                    <li>عنوان واحد بـ ID "main-title" — حجم 48px</li>
+                    <li>استخدم Grouping Selector على كل الـ headings</li>
+                    <li>استخدم Descendant Selector: كل li جوا ul معين</li>
+                </ul>
+            </div>
+
+            <!-- HW3 -->
+            <div class="homework-item">
+                <h4>📌 الواجب الثالث: Color Palette</h4>
+                <p>ابني صفحة "Color Palette" فيها:</p>
+                <ul>
+                    <li>5 boxes كل box بلون مختلف</li>
+                    <li>استخدم: Named Color, HEX, RGB, RGBA, HSL (واحد لكل نوع)</li>
+                    <li>تحت كل box اكتب الكود المستخدم</li>
+                    <li>استخدم RGBA لعمل overlay شفاف على صورة</li>
+                </ul>
+            </div>
+
+            <!-- HW4 -->
+            <div class="homework-item">
+                <h4>📌 الواجب الرابع: Backgrounds Gallery</h4>
+                <p>ابني صفحة "معرض الخلفيات" فيها:</p>
+                <ul>
+                    <li>Section بخلفية لونية</li>
+                    <li>Section بخلفية صورة (background-image + cover)</li>
+                    <li>Section بخلفية صورة + overlay شفاف (RGBA)</li>
+                    <li>Card بخلفية pattern (repeat)</li>
+                    <li>Hero section بـ 100vh + صورة خلفية + عنوان في النص</li>
+                </ul>
+            </div>
+
+            <!-- HW5 -->
+            <div class="homework-item">
+                <h4>📌 الواجب الخامس: التحدي — Product Card</h4>
+                <p>ابني "Product Card" احترافي يجمع كل اللي اتعلمته:</p>
+                <ul>
+                    <li>External CSS في ملف منفصل</li>
+                    <li>Class selectors على الأقل 8 classes</li>
+                    <li>ID selector مرة واحدة</li>
+                    <li>استخدم HEX + RGBA + HSL في الألوان</li>
+                    <li>خلفية بصورة + overlay</li>
+                    <li>استخدم rem + px + % في الوحدات</li>
+                    <li>Grouping + Descendant selectors</li>
+                    <li>المنتج فيه: صورة، اسم، سعر، وصف، زر شراء</li>
+                    <li>نظم الملفات: index.html + css/style.css + images/</li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ========== Footer ========== -->
+    <footer>
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">S</div>
+                <span>Sunshine T Academy</span>
+            </div>
+            <p>Frontend Level 1 — HTML + CSS</p>
+            <p>بنحوّل الحلم لكود ☀️</p>
+            <p class="motto">CSS Fundamentals • Selectors • Colors • Units</p>
+        </div>
+    </footer>
+
+</body>
+</html>
